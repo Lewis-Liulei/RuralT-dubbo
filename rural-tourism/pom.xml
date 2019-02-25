@@ -87,6 +87,16 @@
       <scope>system</scope>
       <systemPath>H:/githubWorkSpace/ruralT/dubbo/rural-tourism/lib/wangyin-rpc-1.0.0.jar</systemPath>
     </dependency>
+    <dependency>
+      <groupId>org.apache.zookeeper</groupId>
+      <artifactId>zookeeper</artifactId>
+      <version>3.4.6</version>
+    </dependency>
+    <dependency>
+      <groupId>com.lmax</groupId>
+      <artifactId>disruptor</artifactId>
+      <version>3.3.4</version>
+    </dependency>
 
   </dependencies>
 

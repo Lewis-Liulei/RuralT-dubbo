@@ -86,10 +86,10 @@
 <!-- 			<AppenderRef ref="Console"/> -->
 		</AsyncLogger>
 		<!-- 默认日志设置 -->
-		<AsyncRoot level="${dyn.log.level}" includeLocation="true">
+		<AsyncRoot level="${rt.log.level}" includeLocation="true">
 			<AppenderRef ref="AllRandomAccessFile"/>
 			<AppenderRef ref="ErrorRandomAccessFile"/>
-<!-- 			<AppenderRef ref="Console"/> -->
+ 			<AppenderRef ref="Console"/>
 		</AsyncRoot>
 	</Loggers>
 </Configuration>
