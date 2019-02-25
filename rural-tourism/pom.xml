@@ -6,7 +6,14 @@
 
   <groupId>rt.lewis</groupId>
   <artifactId>rainbow</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <version>1.0</version>
+  <modules>
+    <module>rt-consumer</module>
+    <module>rt-api</module>
+    <module>rt-commons</module>
+    <module>test</module>
+  </modules>
 
   <name>rainbow</name>
   <!-- FIXME change it to the project's website -->
@@ -25,9 +32,75 @@
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>dubbo</artifactId>
+      <version>2.5.10</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.25</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.8.5</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-slf4j-impl</artifactId>
+      <version>2.11.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>2.11.1</version>
+    </dependency>
+    <dependency>
+      <groupId>cn.cgnb</groupId>
+      <artifactId>cgnb-core</artifactId>
+      <version>2.0.2</version>
+      <scope>system</scope>
+      <systemPath>H:/githubWorkSpace/ruralT/dubbo/rural-tourism/lib/cgnb-core-2.0.2.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>com.external</groupId>
+      <artifactId>wangyin-front</artifactId>
+      <version>2.0.2</version>
+      <scope>system</scope>
+      <systemPath>H:/githubWorkSpace/ruralT/dubbo/rural-tourism/lib/wangyin-front-2.0.2.jar</systemPath>
+    </dependency>
+
+    <dependency>
+      <groupId>com.external</groupId>
+      <artifactId>wangyin-dubbo</artifactId>
+      <version>1.0.9</version>
+      <scope>system</scope>
+      <systemPath>H:/githubWorkSpace/ruralT/dubbo/rural-tourism/lib/wangyin-dubbo-1.0.9.jar</systemPath>
+    </dependency>
+
+    <dependency>
+      <groupId>com.external</groupId>
+      <artifactId>wangyin-rpc</artifactId>
+      <version>1.0.0</version>
+      <scope>system</scope>
+      <systemPath>H:/githubWorkSpace/ruralT/dubbo/rural-tourism/lib/wangyin-rpc-1.0.0.jar</systemPath>
+    </dependency>
+
   </dependencies>
 
   <build>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+      <resource>
+        <directory>src/main/scripts</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
@@ -47,6 +120,9 @@
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.22.1</version>
+          <configuration>
+            <skipTests>true</skipTests>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
@@ -72,4 +148,106 @@
       </plugins>
     </pluginManagement>
   </build>
+  <profiles>
+    <profile>
+      <!-- 演练测试环境 -->
+      <id>yanlian</id>
+      <properties>
+        <!-- 基础包版本号 -->
+        <rt.deploy.core.version>2.0.2</rt.deploy.core.version>
+        <rt.deploy.dao.version>2.0.2</rt.deploy.dao.version>
+        <rt.deploy.cache.version>2.0.2</rt.deploy.cache.version>
+        <rt.deploy.transportbase.version>2.0.2</rt.deploy.transportbase.version>
+        <rt.deploy.cgnb-base.version>2.0.2</rt.deploy.cgnb-base.version>
+        <!-- 注册中心zk地址 -->
+        <rt.registry.address>zookeeper://127.0.0.1:2181</rt.registry.address>
+        <!-- redis缓存配置 -->
+        <!--<rt.redis.sentinels>
+          <![CDATA[<value>172.32.5.121:26379</value>]]>
+          <![CDATA[<value>172.32.5.121:26380</value>]]>
+          <![CDATA[<value>172.32.5.121:26381</value>]]>
+        </rt.redis.sentinels>
+        <rt.redis.sentinel.mastername>mymaster</rt.redis.sentinel.mastername>
+        <rt.redis.pwd>cgnb@123</rt.redis.pwd>-->
+        <!-- message对应的redis缓存配置 -->
+        <!--<rt.message.redis.sentinels>
+          <![CDATA[<value>172.32.4.32:26380</value>]]>
+          <![CDATA[<value>172.32.4.33:26380</value>]]>
+        </rt.message.redis.sentinels>
+        <rt.message.redis.sentinel.mastername>mymaster</rt.message.redis.sentinel.mastername>
+        <rt.message.redis.pwd>cgnb@123</rt.message.redis.pwd>-->
+        <!-- 数据库配置 -->
+        <!--<rt.jdbc.url>jdbc:oracle:thin:@172.32.98.18:1521:oracledb</rt.jdbc.url>
+        <rt.jdbc.username>zs_orange_nc</rt.jdbc.username>
+        <rt.jdbc.password>cgnb123</rt.jdbc.password>
+        <rt.jdbc.initialSize>10</rt.jdbc.initialSize>
+        <rt.jdbc.minIdle>1</rt.jdbc.minIdle>
+        <rt.jdbc.maxIdle>100</rt.jdbc.maxIdle>
+        <rt.jdbc.maxWait>600000</rt.jdbc.maxWait>
+        <rt.jdbc.maxActive>100</rt.jdbc.maxActive>-->
+        <!-- panda数据库配置 -->
+       <!-- <rt.panda.jdbc.url>jdbc:oracle:thin:@172.32.98.18:1521:oracledb</rt.panda.jdbc.url>
+        <rt.panda.jdbc.username>freetrans</rt.panda.jdbc.username>
+        <rt.panda.jdbc.password>freetrans</rt.panda.jdbc.password>-->
+        <!-- dubbo参数配置 -->
+        <rt.dubbo.provider.connections>10</rt.dubbo.provider.connections>
+        <!-- provider参数 -->
+        <rt.dubbo.protocol.threads>10</rt.dubbo.protocol.threads>
+        <!-- provider特别参数1 -->
+        <rt.dubbo.protocol.spec1.threads>40</rt.dubbo.protocol.spec1.threads>
+        <rt.dubbo.consumer.threads>40</rt.dubbo.consumer.threads>
+        <rt.dubbo.protocol.name>dubbo</rt.dubbo.protocol.name>
+        <rt.dubbo.own.version>2.5</rt.dubbo.own.version>
+        <rt.dubbo.out.version>2.5-out</rt.dubbo.out.version>
+       <!-- <rt.dubbo.sdk.out.version>2.5</rt.dubbo.sdk.out.version>
+        <rt.dubbo.yunwei.version>0.1.1</rt.dubbo.yunwei.version>
+        <rt.dubbo.yunwei.group>operation</rt.dubbo.yunwei.group>-->
+        <rt.dubbo.gatewayout.version>2.5</rt.dubbo.gatewayout.version>
+        <rt.dubbo.protocol.dispather>message</rt.dubbo.protocol.dispather>
+        <rt.dubbo.rb.group>rtg</rt.dubbo.rb.group>
+        <!--<rt.dubbo.paysdk.group>paysdk</rt.dubbo.paysdk.group>-->
+        <!--<rt.dubbo.gatewayout.group>gatewayout</rt.dubbo.gatewayout.group>
+        -->
+        <rt.dubbo.rb.registry>rt</rt.dubbo.rb.registry>
+        <rt.dubbo.consumer.check>false</rt.dubbo.consumer.check>
+        <!-- 是否控制重复提交，校验atoken -->
+        <!--<rt.provider.isCheckToken>true</rt.provider.isCheckToken>
+        <rt.dubbo.cloud.version>uat</rt.dubbo.cloud.version>
+        <rt.dubbo.cloud.group>cloud</rt.dubbo.cloud.group>
+        <rt.dubbo.uam.version>1.0.0</rt.dubbo.uam.version>
+        <rt.dubbo.uam.group>uam</rt.dubbo.uam.group>
+        <rt.dubbo.credit.version>outer-yl0.1</rt.dubbo.credit.version>
+        <rt.dubbo.credit.group>creditcardnew</rt.dubbo.credit.group>-->
+
+        <!--MQ相关-->
+        <!--<rt.rocketMQ.transfer.consumerGroupName>mobilebank_midbiz_transfer_consumer_yanlian</rt.rocketMQ.transfer.consumerGroupName>
+        <rt.rocketMQ.transfer.topicName>payment_yanlian</rt.rocketMQ.transfer.topicName>
+        <rt.rocketMQ.transfer.producerName>transfer_payment</rt.rocketMQ.transfer.producerName>
+        &lt;!&ndash; sdk &ndash;&gt;
+        <rt.rocketMQ.mid.consumerGroupName>mobilebank_midbiz_mid_consumer_yanlian</rt.rocketMQ.mid.consumerGroupName>
+        <rt.rocketMQ.mid.topicName>sdk_mid_yanlian</rt.rocketMQ.mid.topicName>
+        <rt.rocketMQ.mid.producerName>socso</rt.rocketMQ.mid.producerName>
+
+        <rt.rocketMQ.namesrvAddr>172.32.5.118:9876;172.32.5.119:9876</rt.rocketMQ.namesrvAddr>
+        <rt.rocketMQ.consumer.name>mobilebank_consumer_yanlian</rt.rocketMQ.consumer.name>
+        <rt.rocketMQ.uam.topic>UAM_USERINFO_MODIFY_YANLIAN</rt.rocketMQ.uam.topic>
+        <rt.rocketMQ.login.consumerGroupName>mobilebank_consumer_login_yanlian</rt.rocketMQ.login.consumerGroupName>
+        <rt.rocketMQ.login.topicName>mobilebank_login_yanlian</rt.rocketMQ.login.topicName>
+        <rt.rocketMQ.login.producerName>login_redis</rt.rocketMQ.login.producerName>
+        <rt.rocketMQ.topicActivity>activity_yanlian</rt.rocketMQ.topicActivity>-->
+        <!-- jvm参数配置 -->
+       <!-- <rt.specJavaOpts.consumer><![CDATA["-Xms512m -Xmx512m -Xmn128m -XX:PermSize=64m -XX:MaxPermSize=64m"]]></rt.specJavaOpts.consumer>
+        <rt.specJavaOpts.provider><![CDATA["-Xms512m -Xmx512m -Xmn256m -XX:PermSize=128m -XX:MaxPermSize=128m"]]></rt.specJavaOpts.provider>
+        <rt.specJavaOpts.spec1><![CDATA["-Xms2048m -Xmx2048m -Xmn512m -XX:PermSize=256m -XX:MaxPermSize=256m"]]></rt.specJavaOpts.spec1>
+        <rt.specJavaOpts.user><![CDATA["-Xms1024m -Xmx1024m -Xmn512m -XX:PermSize=128m -XX:MaxPermSize=128m"]]></rt.specJavaOpts.user>
+        <rt.specJavaOpts.job><![CDATA["-Xms1024m -Xmx1024m -Xmn256m -XX:PermSize=128m -XX:MaxPermSize=128m"]]></rt.specJavaOpts.job>
+        <rt.cds.url><![CDATA[jdbc:cds://cds_server.test.tf.cn:8090/mobilebank_sharding?app=mobilebank_app;key=b284344abcd98bc8388b1e625f530075]]></rt.cds.url>
+        --><!-- 日志级别 -->
+        <rt.log.level>DEBUG</rt.log.level>
+      </properties>
+       <activation> <activeByDefault>true</activeByDefault> </activation>
+    </profile>
+
+
+  </profiles>
 </project>

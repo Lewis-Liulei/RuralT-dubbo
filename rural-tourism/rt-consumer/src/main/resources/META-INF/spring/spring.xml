@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:front="http://www.wangyin.com/schema/front"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.wangyin.com/schema/front http://www.wangyin.com/schema/front/front.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+       default-autowire="no" default-lazy-init="true" default-dependency-check="none">
+
+
+    <!-- 内部服务回调 -->
+    <bean id="innerNotify" class="com.wangyin.front.rpc.CommonInnerNotify">
+        <property name="innerMessageRecvQ" ref="innerMessageRecvQ"/>
+    </bean>
+    <!-- 商户回调 -->
+    <bean id="outerNotify" class="com.wangyin.front.rpc.CommonOuterNotify">
+        <property name="outerMessageRecvQ" ref="outerMessageRecvQ"/>
+    </bean>
+    <!-- 提供商户服务实现类 -->
+    <bean id="outerServiceImpl" class="com.wangyin.front.rpc.VirtualOuterBusinessImpl" scope="prototype">
+        <property name="outerMessageRecvQ" ref="outerMessageRecvQ"/>
+    </bean>
+
+
+    <!--四个消息处理队列-->
+    <bean id="innerMessageRecvQ" class="com.wangyin.front.core.impl.InitiativeQueueServiceImpl">
+        <property name="executor" ref="innerMessageRecvQExecutor"/>
+        <property name="handler" ref="innerMessageRecvQHandler"/>
+    </bean>
+    <bean id="innerMessageSendQ" class="com.wangyin.front.core.impl.InitiativeQueueServiceImpl">
+        <property name="executor" ref="innerMessageSendQExecutor"/>
+        <property name="handler" ref="innerMessageSendQHandler"/>
+    </bean>
+    <bean id="outerMessageRecvQ" class="com.wangyin.front.core.impl.InitiativeQueueServiceImpl">
+        <property name="executor" ref="outerMessageRecvQExecutor"/>
+        <property name="handler" ref="outerMessageRecvQHandler"/>
+    </bean>
+    <bean id="outerMessageSendQ" class="com.wangyin.front.core.impl.InitiativeQueueServiceImpl">
+        <property name="executor" ref="outerMessageSendQExecutor"/>
+        <property name="handler" ref="outerMessageSendQHandler"/>
+    </bean>
+
+    <!--四个处理实例-->
+    <bean id="innerMessageRecvQHandler" class="com.wangyin.front.core.impl.InnerMessageRecvQHandler">
+        <property name="outerMessageSendQ" ref="outerMessageSendQ"/>
+        <property name="messageAdapter" ref="messageAdapter"/>
+        <property name="innerExceptionHandler" ref="innerExceptionHandler"/>
+        <!-- 内部异常处理器 -->
+        <property name="outerExceptionHandler" ref="outerExceptionHandler"/>
+        <!-- 外部异常处理器 -->
+    </bean>
+    <bean id="innerMessageSendQHandler" class="com.wangyin.front.core.impl.InnerMessageSendQHandler">
+        <property name="innerMessageRecvQ" ref="innerMessageRecvQ"/>
+        <property name="messageAdapter" ref="messageAdapter"/>
+        <property name="outerExceptionHandler" ref="outerExceptionHandler"/>
+        <!-- 外部异常处理器 -->
+    </bean>
+    <bean id="outerMessageRecvQHandler" class="com.wangyin.front.core.impl.OuterMessageRecvQHandler">
+        <property name="innerMessageSendQ" ref="innerMessageSendQ"/>
+        <property name="messageAdapter" ref="messageAdapter"/>
+        <property name="innerExceptionHandler" ref="innerExceptionHandler"/>
+        <!-- 内部异常处理器 -->
+        <property name="outerExceptionHandler" ref="outerExceptionHandler"/>
+        <!-- 外部异常处理器 -->
+    </bean>
+    <bean id="outerMessageSendQHandler" class="com.wangyin.front.core.impl.OuterMessageSendQHandler">
+        <property name="outerMessageRecvQ" ref="outerMessageRecvQ"/>
+        <property name="messageAdapter" ref="messageAdapter"/>
+        <property name="innerExceptionHandler" ref="innerExceptionHandler"/>
+        <!-- 内部异常处理器 -->
+        <property name="outerExceptionHandler" ref="outerExceptionHandler"/>
+        <!-- 外部异常处理器 -->
+    </bean>
+
+    <!-- 异常处理器 -->
+    <bean id="innerExceptionHandler" class="com.wangyin.front.exception.DefaultInnerExceptionHandler">
+        <property name="innerMessageSendQ" ref="innerMessageSendQ"/>
+    </bean>
+
+    <bean id="outerExceptionHandler" class="com.wangyin.front.exception.OuterExceptionHandlerAdaptor">
+        <property name="outerMessageSendQ" ref="outerMessageSendQ" />
+    </bean>
+    <!-- 四组线程池-->
+    <bean id="innerMessageRecvQExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="200"/>
+        <property name="maxPoolSize" value="10000"/>
+        <property name="queueCapacity" value="10000"/>
+        <property name="allowCoreThreadTimeOut" value="true" />
+        <property name="keepAliveSeconds" value="300"/>
+        <property name="rejectedExecutionHandler">
+            <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy"/>
+        </property>
+    </bean>
+    <bean id="innerMessageSendQExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="200"/>
+        <property name="maxPoolSize" value="10000"/>
+        <property name="queueCapacity" value="10000"/>
+        <property name="allowCoreThreadTimeOut" value="true" />
+        <property name="keepAliveSeconds" value="300"/>
+        <property name="rejectedExecutionHandler">
+            <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy"/>
+        </property>
+    </bean>
+    <bean id="outerMessageRecvQExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="200"/>
+        <property name="maxPoolSize" value="10000"/>
+        <property name="queueCapacity" value="10000"/>
+        <property name="allowCoreThreadTimeOut" value="true" />
+        <property name="keepAliveSeconds" value="300"/>
+        <property name="rejectedExecutionHandler">
+            <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy"/>
+        </property>
+    </bean>
+    <bean id="outerMessageSendQExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="200"/>
+        <property name="maxPoolSize" value="10000"/>
+        <property name="queueCapacity" value="10000"/>
+        <property name="allowCoreThreadTimeOut" value="true" />
+        <property name="keepAliveSeconds" value="300"/>
+        <property name="rejectedExecutionHandler">
+            <bean class="java.util.concurrent.ThreadPoolExecutor$CallerRunsPolicy"/>
+        </property>
+    </bean>
+
+    <!--与对端适配器部分-->
+    <bean id="messageAdapter" class="com.wangyin.front.adapter.MessageAdapter"/>
+
+    <bean id="mappingMgr" class="com.wangyin.front.util.MappingMgr" init-method="init" lazy-init="false">
+        <property name="messageSource" ref="messageSource"/>
+    </bean>
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+          lazy-init="false">
+        <property name="cacheSeconds" value="3600"/>
+        <property name="basenames">
+            <list>
+            </list>
+        </property>
+    </bean>
+</beans>

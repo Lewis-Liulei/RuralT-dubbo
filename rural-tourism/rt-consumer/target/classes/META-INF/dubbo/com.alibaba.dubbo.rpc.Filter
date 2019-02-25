@@ -1,0 +1,3 @@
+log=cn.cgnb.dubbo.filter.ConsumerLogHelperFilter
+ConsumerAccessLog=cn.cgnb.dubbo.filter.ConsumerAccessLogFilter
+

@@ -1,0 +1,2583 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:front="http://www.wangyin.com/schema/front"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	   	http://www.springframework.org/schema/context 
+	   	http://www.springframework.org/schema/context/spring-context-3.2.xsd
+	   	http://www.wangyin.com/schema/front 
+	   	http://www.wangyin.com/schema/front/front.xsd"
+	default-autowire="no">
+
+	<!-- 开发配置 begin -->
+	<front:out-service id="outService" port="${api.server.port}"
+		protocol="http">
+		<front:in-transform funcodes="${mobilebank.user.getMyRedEnvelList}"
+			target="userRedEnvelFacade.getMyRedEnvelList" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.openRedEnvel}"
+			target="userRedEnvelFacade.openRedEnvel" convertor="redEnvelConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.queryAllAssetsUnderCustno}"
+			target="myAssetsFacade.queryAllAssetsUnderCustno" convertor="myAssetsConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.queryCurrentTransDetail}"
+			target="myAssetsFacade.queryCurrentTransDetail" convertor="queryCurrentTransDetailConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.getAllCards}"
+			target="myAssetsFacade.getAllCards" convertor="queryAllAssetsUnderCustnoConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.getMyAssets}"
+			target="myAssetsFacade.getMyAssets" convertor="myAssetsConvertor" />
+		<front:in-transform funcodes="${mobilebank.security.getPublicKey}"
+			target="securityFacade.getPublicKey" convertor="securityConvertor" />
+		<front:in-transform funcodes="${mobilebank.security.shakeHands}"
+			target="securityFacade.shakeHands" convertor="securityConvertor" />
+		<!-- 账户管理配置开始 -->
+		<front:in-transform funcodes="${mobilebank.account.addotherbankcard}"
+			target="addotherbankcardFacade.addOtherBankCard" convertor="addOtherBankCardConvertor" />
+
+
+		<front:in-transform funcodes="${mobilebank.financ.regular}"
+			target="myRegularFacade.regular" convertor="myRegularConvertor" />
+		<front:in-transform funcodes="${mobilebank.financ.regularRate}"
+			target="myRegularFacade.regularRate" convertor="myRegularConvertor" />
+		<front:in-transform funcodes="${mobilebank.financ.queryProduct}"
+			target="myRegularFacade.queryProduct" convertor="myRegularConvertor" />
+		<front:in-transform funcodes="${mobilebank.financ.saveRegular}"
+			target="myRegularFacade.saveRegular" convertor="myRegularPaymentConvertor" />
+		<front:in-transform funcodes="${mobilebank.financ.regularDraw}"
+			target="myRegularFacade.regularDraw" convertor="myRegularConvertor" />
+		<front:in-transform funcodes="${mobilebank.financ.rateResult}"
+			target="myRegularFacade.rateResult" convertor="myRegularConvertor" />
+		<front:in-transform funcodes="${mobilebank.financ.continueSave}"
+			target="myRegularFacade.continueSave" convertor="myRegularConvertor" />
+		<front:in-transform funcodes="${mobilebank.financ.saveRegularSure}"
+			target="myRegularFacade.saveRegularSure" convertor="myRegularPaymentConvertor" />
+		<front:in-transform funcodes="${mobilebank.financ.query}"
+			target="myRegularFacade.query" convertor="myRegularConvertor" />
+		<front:in-transform funcodes="${mobilebank.financ.cardList}"
+			target="myRegularFacade.cardList" convertor="myRegularConvertor" />
+
+		<!-- <front:in-transform funcodes="${mobilebank.operation.checkUpdate}" 
+			target="checkUpdateFacade.checkUpdate" convertor="baseInputMsgConvertor" 
+			/> -->
+		<!-- <front:in-transform funcodes="${mobilebank.operation.checkUpdate}" -->
+		<!-- target="checkUpdateFacade.checkUpdate" convertor="baseInputMsgConvertor" 
+			/> -->
+		<front:in-transform funcodes="${mobilebank.account.judgeMobilePhone}"
+			target="bankCardFacade.judgeMobilePhone" convertor="addBankCardConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.validateBankCardPassword}"
+			target="bankCardFacade.validateBankCardPassword" convertor="validateBankCardPasswordConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.addBankCard}"
+			target="bankCardFacade.addBankCard" convertor="addBankCardConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.bundAccount}"
+			target="bankCardFacade.bundAccount" convertor="addBankCardConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.account.checkBankCardAndRemainPhone}" target="bankCardFacade.checkBankCardAndRemainPhone"
+			convertor="bankPhoneConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.isSelfBankOrNot}"
+			target="bankCardFacade.isSelfBankOrNot" convertor="bankPhoneConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.judgeCardBin}"
+			target="bankCardFacade.judgeCardBin" convertor="bankPhoneConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.saveChangeBundAccountPics}"
+			target="bankCardFacade.saveChangeBundAccountPics" convertor="bankPhoneConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.getBundStatus}"
+			target="bankCardFacade.getBundStatus" convertor="bankPhoneConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.isCertCardOrBundCard}"
+			target="bankCardFacade.isCertCardOrBundCard" convertor="bankPhoneConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.selfBankCardResetPayPwd}"
+			target="bankCardFacade.selfBankCardResetPayPwd" convertor="bankPhoneConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.judgeCardAndRemainPhone}"
+			target="bankCardFacade.judgeCardAndRemainPhone" convertor="bankPhoneConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.updateBankCardAlias}"
+			target="bankCardFacade.updateBankCardAlias" convertor="updateBankCardAliasConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.deleteBankCard}"
+			target="bankCardFacade.deleteBankCard" convertor="deleteBankCardConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.getAppendedCardsInfo}"
+			target="bankCardFacade.getAppendedCardsInfo" convertor="getCardListConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.getMobileOfTFCard}"
+			target="bankCardFacade.getMobileOfTFCard" convertor="bankPhoneConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.getCardList}"
+			target="bankCardFacade.getCardList" convertor="getCardListConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.getCardDetail}"
+			target="bankCardFacade.getCardDetail" convertor="getCardDetailConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.modifyCardPassword}"
+			target="bankCardFacade.modifyCardPassword" convertor="validateBankCardPasswordConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.getCGNBCards}"
+			target="bankCardFacade.getCGNBCards" convertor="validateBankCardPasswordConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.queryBundPrimaryAccount}"
+			target="bankCardFacade.queryBundPrimaryAccount" convertor="queryBundPrimaryAccountConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.account.changeBundPrimarySelfAccount}" target="bankCardFacade.changeBundPrimarySelfAccount"
+			convertor="changeBundPrimaryAccountConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.account.addBundPrimary}" target="bankCardFacade.addBundPrimary"
+			convertor="changeBundPrimaryAccountConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.account.deleteBundPrimary}" target="bankCardFacade.deleteBundPrimary"
+			convertor="changeBundPrimaryAccountConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.account.changeBundPrimaryOtherAccount}"
+			target="bankCardFacade.changeBundPrimaryOtherAccount" convertor="changeBundPrimaryAccountConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.getMyOrders}"
+			target="bankCardFacade.getMyOrders" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.checkPayPwd}"
+			target="bankCardFacade.checkPayPwd" convertor="validateBankCardPasswordConvertor" />
+		<!-- 他转本配置 -->
+		<front:in-transform funcodes="${mobilebank.account.crossToInner}"
+			target="bankCardFacade.crossToInner" convertor="crossToInnerConvertor" />
+		<!-- 短信验证码配置 -->
+		<front:in-transform funcodes="${mobilebank.account.sendVerificationCode}"
+			target="verificationCodeFacade.sendVerificationCode" convertor="verificationCodeConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.checkVerificationCode}"
+			target="verificationCodeFacade.checkVerificationCode" convertor="verificationCodeConvertor" />
+		<!-- 短信验证码提示信息 -->
+		<front:in-transform funcodes="${mobilebank.notice.queryNotice}"
+			target="noticeFacade.queryNotice" convertor="noticeConvertor" />
+		<!-- 配置信息查询 -->
+		<front:in-transform funcodes="${mobilebank.config.querySafe3d}"
+			target="configFacade.querySafe3d" convertor="configConvertor" />
+		<!-- 跳转查询 -->
+		<front:in-transform funcodes="${mobilebank.config.jumpChoice}"
+			target="configFacade.jumpChoice" convertor="jumpChoiceConvertor" />
+		<!-- 图形验证码 -->
+		<front:in-transform funcodes="${mobilebank.account.drawVerificationCode}"
+			target="verificationCodeFacade.drawVerificationCode" convertor="baseInputMsgConvertor" />
+		<!-- 理财配置 -->
+		<front:in-transform funcodes="${mobilebank.finance.financeProduct}"
+			target="financeProductFacade.queryFinanceProduct" convertor="financeProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.finance.queryFinanceQuato}"
+			target="financeProductFacade.queryFinanceQuato" convertor="financeProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.finance.riskAssessPaper}"
+			target="financeProductFacade.queryRiskAssessPaper" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.finance.doRiskAssess}"
+			target="financeProductFacade.doRiskAssess" convertor="riskAssessParamConvertor" />
+		<front:in-transform funcodes="${mobilebank.finance.querySignBankAccount}"
+			target="financeProductFacade.querySignBankAccount" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.finance.purchase}"
+			target="financeProductFacade.purchaseProduct" convertor="financeBuyParamConvertor" />
+		<front:in-transform funcodes="${mobilebank.finance.queryCancellation}"
+			target="financeProductFacade.queryRevokeAbility" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.finance.revoke}"
+			target="financeProductFacade.revokeProduct" convertor="revokeParamRequestConvertor" />
+		<front:in-transform funcodes="${mobilebank.finance.queryCustomerQuato}"
+			target="financeProductFacade.queryCustomerQuato" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.finance.redeem}"
+			target="financeProductFacade.redeemProduct" convertor="redeemParamConvertor" />
+		<front:in-transform funcodes="${mobilebank.finance.queryClientMsg}"
+			target="financeProductFacade.queryClientMsg" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.finance.queryRecommender}"
+			target="financeProductFacade.queryRecommender" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.finance.checkIsContinue}"
+			target="financeProductFacade.checkIsContinue" convertor="financeProductConvertor" />
+
+		<front:in-transform funcodes="${mobilebank.finance.queryTransferOrders}"
+			target="financeProductFacade.queryTransferOrders" convertor="financeProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.finance.buyTransferPrd}"
+			target="financeProductFacade.buyTransferPrd" convertor="financeBuyParamConvertor" />
+		<front:in-transform funcodes="${mobilebank.finance.transferProduct}"
+			target="financeProductFacade.transferProduct" convertor="financeBuyParamConvertor" />
+		<front:in-transform funcodes="${mobilebank.finance.transferProfitCalculate}"
+			target="financeProductFacade.transferProfitCalculate" convertor="financeBuyParamConvertor" />
+		<front:in-transform funcodes="${mobilebank.finance.queryFeeRule}"
+			target="financeProductFacade.queryFeeRule" convertor="financeProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.finance.queryTransDetail}"
+			target="financeProductFacade.queryTransDetail" convertor="financeProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.finance.revokeTransferPrd}"
+			target="financeProductFacade.revokeTransferPrd" convertor="revokeParamRequestConvertor" />
+		<front:in-transform funcodes="${mobilebank.finance.queryLatelyPrice}"
+			target="financeProductFacade.queryLatelyPrice" convertor="financeProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.finance.getOpenDays}"
+			target="financeProductFacade.getOpenDays" convertor="financeProductConvertor" />
+		<!-- 理财资讯 -->
+		<front:in-transform
+			funcodes="${mobilebank.finance.information.getHomeArticleList}"
+			target="financialInformationFacade.getHomeArticleList" convertor="informationConvertor" />
+		<front:in-transform funcodes="${mobilebank.finance.information.getArticleList}"
+			target="financialInformationFacade.getArticleList" convertor="informationConvertor" />
+		<!-- 理财资讯end -->
+		<!-- 中间业务，房管 -->
+		<front:in-transform funcodes="${mobilebank.midbus.getHouseQueryTypes}"
+			target="houseInfoFacade.getHouseQueryTypes" convertor="houseInfoConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.queryHouseInfo}"
+			target="houseInfoFacade.queryHouseInfo" convertor="houseInfoConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.houseInfoRecordList}"
+			target="houseInfoFacade.houseInfoRecordList" convertor="houseInfoConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.paymentHouseInfo}"
+			target="houseInfoFacade.paymentHouseInfo" convertor="housePaymentConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.getHouseInfo}"
+			target="houseInfoFacade.getHouseInfo" convertor="houseInfoConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.payHouseInfo}"
+			target="houseInfoFacade.payHouseInfo" convertor="housePaymentConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.getHouseBalance}"
+			target="houseInfoFacade.getHouseBalance" convertor="houseInfoConvertor" />
+		<!-- 中间业务，薪酬 -->
+		<front:in-transform funcodes="${mobilebank.midbus.getSalaryList}"
+			target="salaryFacade.getSalaryList" convertor="salaryConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.getSalaryDetail}"
+			target="salaryFacade.getSalaryDetail" convertor="salaryConvertor" />
+		<!-- 登录 -->
+		<front:in-transform funcodes="${mobilebank.user.login}"
+			target="loginFacade.userLogin" convertor="loginConvertor" />
+		<!-- 新登录 -->
+		<front:in-transform funcodes="${mobilebank.user.loginNew}"
+			target="loginNewFacade.userLogin" convertor="loginConvertor" />
+		<!-- 新用户指纹登录 -->
+		<front:in-transform funcodes="${mobilebank.user.fingerLogin}"
+			target="loginNewFacade.fingerLogin" convertor="loginConvertor" />
+		<!-- 新用户指纹登录 -->
+		<front:in-transform funcodes="${mobilebank.user.new.updateUserInfo}"
+			target="loginNewFacade.updateUserInfoNew" convertor="uploadIDCardConvertor" />
+		<!-- 用户指纹登录,获取公钥和私钥 -->
+		
+		
+		<!-- 可视化2.0 -->
+
+		<front:in-transform funcodes="${mobilebank.activity.queryUserHisAward}"
+			target="activityFacade2.queryUserHisAward" convertor="activity2Convertor" />
+		<front:in-transform funcodes="${mobilebank.activity.queryActivityByID}"
+			target="activityFacade2.queryActivityByID" convertor="activity2Convertor" />
+		<front:in-transform funcodes="${mobilebank.activity.queryActivityList}"
+			target="activityFacade2.queryActivityList" convertor="activity2Convertor" />
+		<front:in-transform funcodes="${mobilebank.activity.queryTaskList}"
+			target="activityFacade2.queryTaskList" convertor="activity2Convertor" />	
+		<front:in-transform funcodes="${mobilebank.activity.queryAwardList}"
+			target="activityFacade2.queryAwardList" convertor="activity2Convertor" />
+		<front:in-transform funcodes="${mobilebank.activity.getAward}"
+			target="activityScoreFacade.getAward" convertor="activityConvertor" />	
+		<front:in-transform funcodes="${mobilebank.activity.checkTaskFinshStatus}"
+			target="activityFacade2.checkTaskFinshStatus" convertor="activity2Convertor" />
+		<front:in-transform funcodes="${mobilebank.activity.checkActivityCertStatus}"
+			target="activityFacade2.checkActivityCertStatus" convertor="activity2Convertor" />		
+		<front:in-transform funcodes="${mobilebank.activity.queryWalletAccount}"
+			target="activityFacade2.queryWalletAccount" convertor="activity2Convertor" />
+		<front:in-transform funcodes="${mobilebank.activity.addNewWalletAccount}"
+			target="activityFacade2.addNewWalletAccount" convertor="activity2Convertor" />
+		<!-- 可视化2.0 -->
+		
+		
+		<front:in-transform funcodes="${mobilebank.user.getPwd}"
+			target="loginNewFacade.getPwd" convertor="loginConvertor" />
+		<!-- 保存用户常用设备 -->
+		<front:in-transform funcodes="${mobilebank.user.userSaveDevice}"
+			target="loginFacade.userSaveDevice" convertor="loginConvertor" />
+		<!-- 保存用户常用设备(转账) -->
+		<front:in-transform funcodes="${mobilebank.user.saveDeviceForTransfer}"
+			target="loginFacade.saveDeviceForTransfer" convertor="faceLoginConvertor" />
+		<!-- 检查当前设备的历史状态 -->
+		<front:in-transform funcodes="${mobilebank.user.checkDeviceStatus}"
+			target="loginFacade.checkDeviceStatus" convertor="loginConvertor" />
+		<!-- 获取用户当前常用设备（2.0一个账户存在一个常用设备，1对1） -->
+		<front:in-transform funcodes="${mobilebank.user.getCurrentDevice}"
+			target="loginFacade.getCurrentDevice" convertor="loginConvertor" />
+		<!-- 删除用户常用设备并保存当前设备 -->
+		<front:in-transform funcodes="${mobilebank.user.deleteUserDevices}"
+			target="loginFacade.deleteUserDevices" convertor="loginConvertor" />
+		<!-- 储存设备号和设备Id -->
+		<front:in-transform funcodes="${mobilebank.user.saveDevice}"
+			target="loginFacade.saveDevice" convertor="loginConvertor" />
+		<!-- 刷脸登录 -->
+		<front:in-transform funcodes="${mobilebank.user.faceLogin}"
+			target="loginFacade.faceLogin" convertor="faceLoginConvertor" />
+		<!-- 验证实名认证信息是否正确 -->
+		<front:in-transform funcodes="${mobilebank.user.checkInfo}"
+			target="updatePwdFacade.checkInfo" convertor="updatePwdConvertor" />
+		<!-- 重置支付密码 -->
+		<front:in-transform funcodes="${mobilebank.user.setPayPasswordNewVersion}"
+			target="updatePwdFacade.setPayPasswordNewVersion" convertor="payPwdConvertor" />
+		<!-- 验证支付密码 -->
+		<front:in-transform funcodes="${mobilebank.user.checkWalletPassword}"
+			target="updatePwdFacade.checkWalletPassword" convertor="checkWalletPasswordConvertor" />
+		<!-- 验证支付密码 -->
+		<front:in-transform funcodes="${mobilebank.user.checkWalletPasswordCache}"
+			target="updatePwdFacade.checkWalletPasswordCache" convertor="checkWalletPasswordConvertor" />
+		<!-- 重置登录密码,非登录状态 -->
+		<front:in-transform funcodes="${mobilebank.user.resetPassword}"
+			target="updatePwdFacade.resetPassword" convertor="updatePwdConvertor" />
+		<!-- 广告模块 -->
+		<front:in-transform funcodes="${mobilebank.user.getMAdvert}"
+			target="advertFacade.getMAdvert" convertor="advertConvertor" />
+		<!-- 记录广告点击次数 -->
+		<front:in-transform funcodes="${mobilebank.user.click}"
+			target="advertFacade.click" convertor="advertConvertor" />
+		<!-- 文字广告配置 -->
+		<front:in-transform funcodes="${mobilebank.user.moduleConfigUpdate}"
+			target="moduleFacade.moduleConfigUpdate" convertor="moduleConvertor" />
+		<!-- 获取常用设备列表 -->
+		<front:in-transform funcodes="${mobilebank.user.getDeviceList}"
+			target="loginFacade.getDeviceList" convertor="loginConvertor" />
+		<!-- 登陆退出 -->
+		<front:in-transform funcodes="${mobilebank.user.logout}"
+			target="loginFacade.logout" convertor="loginConvertor" />
+		<!-- 非常用设备登录 -->
+		<front:in-transform funcodes="${mobilebank.user.msgLogin}"
+			target="loginFacade.msgLogin" convertor="loginConvertor" />
+		<!-- ocr登录 -->
+		<front:in-transform funcodes="${mobilebank.user.ocrLogin}"
+			target="loginFacade.ocrLogin" convertor="loginConvertor" />
+		<!-- 删除常用设备 -->
+		<front:in-transform funcodes="${mobilebank.user.deleteDevice}"
+			target="loginFacade.deleteDevice" convertor="loginConvertor" />
+		<!-- 查询最近登录记录 -->
+		<front:in-transform funcodes="${mobilebank.user.getLoginAuditList}"
+			target="loginFacade.getLoginAuditList" convertor="loginConvertor" />
+		<!-- 验证登录密码 -->
+		<front:in-transform funcodes="${mobilebank.user.checkLoginPassword}"
+			target="loginFacade.checkLoginPassword" convertor="loginConvertor" />
+		<!-- 重置登录密码 -->
+		<front:in-transform funcodes="${mobilebank.user.resetLoginPassword}"
+			target="loginFacade.resetLoginPassword" convertor="loginConvertor" />
+		<!-- 是否设置支付密码 -->
+		<front:in-transform funcodes="${mobilebank.user.isHavePayPassword}"
+			target="loginFacade.isHavePayPassword" convertor="loginConvertor" />
+		<!-- 密码验证是否通过 -->
+		<front:in-transform funcodes="${mobilebank.user.saveIsPass}"
+			target="loginFacade.saveIsPass" convertor="loginConvertor" />
+		<!-- 设置支付密码 -->
+		<front:in-transform funcodes="${mobilebank.user.setPayPassword}"
+			target="loginFacade.setPayPassword" convertor="loginConvertor" />
+		<!-- 重置支付密码 -->
+		<front:in-transform funcodes="${mobilebank.user.resetPayPassword}"
+			target="loginFacade.resetPayPassword" convertor="loginConvertor" />
+		<!-- 重置支付密码 -->
+		<front:in-transform funcodes="${mobilebank.user.checkPayPwdAcNo}"
+			target="loginFacade.checkPayPwdAcNo" convertor="loginConvertor" />
+		<!-- 设置单个用户免密限额 -->
+		<front:in-transform funcodes="${mobilebank.user.setPayLimit}"
+			target="payLimitFacade.setPayLimit" convertor="payLimitConvertor" />
+		<!-- 获取限额选项 -->
+		<front:in-transform funcodes="${mobilebank.user.getPayLimit}"
+			target="payLimitFacade.getPayLimit" convertor="payLimitConvertor" />
+		<!-- 获取活动 -->
+		<front:in-transform funcodes="${mobilebank.user.activityHandler}"
+			target="startFacade.activityHandler" convertor="startConvertor" />
+		<!-- 登录弹框 -->
+		<front:in-transform funcodes="${mobilebank.user.tagHandler}"
+			target="startFacade.tagHandler" convertor="startConvertor" />
+		<!-- 设置手势密码 -->
+		<front:in-transform funcodes="${mobilebank.user.setHandPwd}"
+			target="registerFacade.setHandPwd" convertor="handPwdConvertor" />
+		<!-- 判断用户是否设置手势或者刷脸 -->
+		<front:in-transform funcodes="${mobilebank.user.isHandOrFaceSet}"
+			target="loginFacade.isHandOrFaceSet" convertor="handPwdConvertor" />
+		<!-- 手势登录 -->
+		<front:in-transform funcodes="${mobilebank.user.handPwdLogin}"
+			target="loginFacade.handPwdLogin" convertor="handPwdConvertor" />
+		<!-- 手势登录 -->
+		<front:in-transform funcodes="${mobilebank.user.handPwdLoginNew}"
+			target="loginNewFacade.handPwdLogin" convertor="handPwdConvertor" />
+		<!-- 启动请求 -->
+		<front:in-transform funcodes="${mobilebank.user.start}"
+			target="startFacade.start" convertor="startConvertor" />
+		<!-- 獲取錯誤碼 -->
+		<front:in-transform funcodes="${mobilebank.user.getErrorMessageList}"
+			target="startFacade.getErrorMessageList" convertor="startConvertor" />
+		<!-- 注册 -->
+		<front:in-transform funcodes="${mobilebank.user.register}"
+			target="registerFacade.register" convertor="registerConvertor" />
+		<!-- 检查用户信息 -->
+		<front:in-transform funcodes="${mobilebank.user.checkUserInfo}"
+			target="registerFacade.checkUserInfo" convertor="checkUserInfoConvertor" />
+		<!-- 检查银行卡类型 -->
+		<front:in-transform funcodes="${mobilebank.user.checkAcNoType}"
+			target="registerFacade.checkAcNoType" convertor="checkAcNoTypeConvertor" />
+		<!-- 验证卡密 -->
+		<front:in-transform funcodes="${mobilebank.user.checkCardPwd}"
+			target="registerFacade.checkCardPwd" convertor="acNoPwdForRegisterConvertor" />
+		<!-- 注册实名认证 -->
+		<front:in-transform funcodes="${mobilebank.user.certificate}"
+			target="registerFacade.certificate" convertor="certificateConvertor" />
+		<!-- 上传身份证 -->
+		<front:in-transform funcodes="${mobilebank.user.uploadIdCard}"
+			target="registerFacade.uploadIdCard" convertor="uploadIDCardConvertor" />
+		<!-- 新上传身份证 -->
+		<front:in-transform funcodes="${mobilebank.user.new.uploadIdCard}"
+			target="certificateFacade.uploadIdCardNew" convertor="uploadIDCardConvertor" />
+		<!-- 验证预留手机号 -->
+		<front:in-transform funcodes="${mobilebank.user.checkBankRemainPhone}"
+			target="registerFacade.checkBankRemainPhone" convertor="bankRemainPhoneConvertor" />
+		<!-- 开二类户 -->
+		<front:in-transform funcodes="${mobilebank.user.openCard}"
+			target="registerFacade.openCard" convertor="openCardConvertor" />
+		<!-- 获取注册证件类型 -->
+		<front:in-transform funcodes="${mobilebank.user.getRegisterIdType}"
+			target="registerFacade.getRegisterIdType" convertor="registerIdTypeConvertor" />
+		<!-- 获取注册证件类型 -->
+		<front:in-transform funcodes="${mobilebank.user.getJobList}"
+			target="registerFacade.getJobList" convertor="registerIdTypeConvertor" />
+		<!-- 游客登录 -->
+		<front:in-transform funcodes="${mobilebank.user.visitorRegister}"
+			target="startFacade.register" convertor="startConvertor" />
+		<!-- 查询是否是本行卡 -->
+		<front:in-transform funcodes="${mobilebank.user.getAcNoType}"
+			target="registerFacade.getAcNoType" convertor="getAcNoTypeConvertor" />
+		<!-- 验证卡密 -->
+		<front:in-transform funcodes="${mobilebank.user.checkAcNoPwd}"
+			target="registerFacade.checkAcNoPwd" convertor="acNoPwdConvertor" />
+		<!-- 验证卡密 -->
+		<front:in-transform funcodes="${mobilebank.user.checkLoginAcNo}"
+			target="registerFacade.checkLoginAcNo" convertor="acNoPwdConvertor" />
+		<!-- 验证预留手机号 -->
+		<front:in-transform funcodes="${mobilebank.user.checkBankPhone}"
+			target="registerFacade.checkBankPhone" convertor="bankPhoneConvertor" />
+		<!-- 设置支付密码 -->
+		<front:in-transform funcodes="${mobilebank.user.setPayPwd}"
+			target="registerFacade.setPayPwd" convertor="payPwdConvertor" />
+		<!-- 删除用户 -->
+		<front:in-transform funcodes="${mobilebank.user.deleteUser}"
+			target="deleteUserFacade.deleteUser" convertor="userDeleteConvertor" />
+		<!-- 展示用户信息 -->
+		<front:in-transform funcodes="${mobilebank.user.showUser}"
+			target="updateUserFacade.showUser" convertor="userUpdateConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.getCertificationInfo}"
+			target="updateUserFacade.getCertificationInfo" convertor="userUpdateConvertor" />
+		<!-- 查询用户9要素信息 -->
+		<front:in-transform funcodes="${mobilebank.user.showUserInfo}"
+			target="updateUserFacade.showUserInfo" convertor="userUpdateConvertor" />
+		<!-- 修改用户信息 -->
+		<front:in-transform funcodes="${mobilebank.user.updateUserInfo}"
+			target="updateUserFacade.updateUserInfo" convertor="userUpdateConvertor" />
+
+		<!-- 新帐户体系开始 -->
+		<front:in-transform funcodes="${mobilebank.user.new.checkAcNo}"
+			target="registerNewFacade.checkAcNo" convertor="checkAcNoTypeConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.new.checkAcNoPwd}"
+			target="certificateFacade.checkAcNoPwdNew" convertor="acNoPwdConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.new.setPayPwd}"
+			target="registerNewFacade.setPayPwd" convertor="certificateConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.new.checkRemainPhone}"
+			target="certificateFacade.checkRemainPhone" convertor="bankRemainPhoneConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.new.selfCardCertificate}"
+			target="certificateFacade.selfCardCertificate" convertor="certificateConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.new.openCard}"
+			target="certificateFacade.openCardNew" convertor="openCardConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.new.checkBankPwdForNoIdCard}"
+			target="certificateFacade.checkBankPwdForNoIdCard" convertor="acNoPwdConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.new.setPayPwdForNoIdCard}"
+			target="certificateFacade.setPayPwdForNoIdCard" convertor="certificateConvertor" />
+		<!-- 新帐户体系结束 -->
+		<!-- 历史设备登陆信息 -->
+		<front:in-transform funcodes="${mobilebank.user.historyDeviceInfo}"
+			target="historyDeviceFacade.historyDeviceInfo" convertor="historyDeviceConvertor" />
+		<!-- 历史设备登陆信息交易列表 -->
+		<front:in-transform funcodes="${mobilebank.user.historyDeviceList}"
+			target="historyDeviceFacade.historyDeviceList" convertor="historyDeviceConvertor" />
+		<!-- 历史设备登陆信息交易详情 -->
+		<front:in-transform funcodes="${mobilebank.user.historyDeviceDetail}"
+			target="historyDeviceFacade.historyDeviceDetail" convertor="historyDeviceConvertor" />
+
+
+
+		<!-- 预留手机号查询 -->
+		<front:in-transform funcodes="${mobilebank.account.getMobileNumber}"
+			target="bankCardPhoneFacade.getMobileNumber" convertor="secureLockConvertor" />
+		<!-- 安心锁动作 -->
+		<front:in-transform funcodes="${mobilebank.account.lockAction}"
+			target="secureLockActFacade.lockAction" convertor="secureLockConvertor" />
+		<!-- 部分锁查询 -->
+		<front:in-transform funcodes="${mobilebank.account.getPartialLock}"
+			target="secureLockActFacade.getPartialLock" convertor="secureLockConvertor" />
+		<!-- 熊猫钱包 -->
+		<front:in-transform
+			funcodes="${mobilebank.account.walletAccount.getWalletAccount}"
+			target="walletAccountFacade.getWalletAccount" convertor="baseInputMsgConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.account.walletAccount.getBalanceStatsAll}"
+			target="walletAccountFacade.getBalanceStatsAll" convertor="baseInputMsgConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.account.walletAccount.getMonthBillsForUser}"
+			target="walletAccountFacade.getMonthBillsForUser" convertor="walletBillConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.walletAccount.queryDcmtfs}"
+			target="walletAccountFacade.queryDcmtfs" convertor="dcmtfsConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.walletAccount.withdraw}"
+			target="walletAccountFacade.withdraw" convertor="walletWithdrawConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.account.walletAccount.updatePriCard}" target="walletAccountFacade.updatePriCard"
+			convertor="dcmtfsConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.account.walletAccount.getPaymentCards}"
+			target="walletAccountFacade.getPaymentCards" convertor="paymentCardsConvertor" />
+		<!-- hce -->
+		<front:in-transform funcodes="${mobilebank.account.hce.list}"
+			target="hceFacade.list" convertor="hceConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.hce.deviceCardInfo}"
+			target="hceFacade.deviceCardInfo" convertor="hceConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.hce.changeStatus}"
+			target="hceFacade.changeStatus" convertor="hceConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.hce.changeHistory}"
+			target="hceFacade.changeHistory" convertor="hceConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.hce.saveHce}"
+			target="hceFacade.saveHce" convertor="hceConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.hce.isHceExit}"
+			target="hceFacade.isHceExit" convertor="hceConvertor" />
+		<!-- 中间业务，新农合医保缴费 -->
+		<front:in-transform funcodes="${mobilebank.midbus.xnh.queryEntitlement}"
+			target="xnhFacade.xnhQueryEntitlement" convertor="xnhQueryConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.xnh.querySOCSOV2}"
+			target="xnhFacade.xnhQuerySOCSO" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.xnh.queryBusinessCodeV2}"
+			target="xnhFacade.xnhQueryBusinessCode" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.xnh.canApplyV2}"
+			target="xnhFacade.xnhCanApply" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.xnh.reviewV2}"
+			target="xnhFacade.xnhReview" convertor="xnhReviewConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.xnh.payV2}"
+			target="xnhFacade.xnhPay" convertor="xnhPayConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.xnh.cancelV2}"
+			target="xnhFacade.xnhCancel" convertor="xnhCancelConvertor" />
+		<front:in-transform funcodes="${mobilebank.xnh.queryPaymentDetailV2}"
+			target="xnhFacade.queryPaymentDetail" convertor="xnhDetailConvertor" />
+		<front:in-transform funcodes="${mobilebank.xnh.queryPaymentRecordV2}"
+			target="xnhFacade.queryPaymentRecord" convertor="baseInputMsgConvertor" />
+		<!-- 中间业务，酒店管理 -->
+		<front:in-transform funcodes="${mobilebank.midbus.hotel.getAreaCountInfoList}"
+			target="hotelFacade.getAreaCountInfoList" convertor="hotelConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.hotel.hotels}"
+			target="hotelFacade.hotels" convertor="hotelConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.hotel.productDetails}"
+			target="hotelFacade.productDetails" convertor="hotelConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.hotel.productBaseDetail}"
+			target="hotelFacade.productBaseDetail" convertor="hotelConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.hotel.checkAvl}"
+			target="hotelFacade.checkAvl" convertor="hotelConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.hotel.productList}"
+			target="hotelFacade.productList" convertor="hotelConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.hotel.bookHotel}"
+			target="hotelFacade.bookHotel" convertor="hotelConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.hotel.hotelOrderList}"
+			target="hotelFacade.hotelOrderList" convertor="hotelConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.hotel.hotelOrderDetail}"
+			target="hotelFacade.hotelOrderDetail" convertor="hotelConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.hotel.cancleHotelOrder}"
+			target="hotelFacade.cancleHotelOrder" convertor="hotelConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.hotel.saveWebPay}"
+			target="hotelFacade.saveWebPay" convertor="hotelConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.hotel.hotelPay}"
+			target="hotelFacade.hotelPay" convertor="hotelPayConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.hotel.hotelRefund}"
+			target="hotelFacade.hotelRefund" convertor="hotelPayConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.hotel.deleteHotelOrder}"
+			target="hotelFacade.deleteHotelOrder" convertor="hotelConvertor" />
+		<!-- 中间业务，生活缴费 -->
+		<front:in-transform
+			funcodes="${mobilebank.midbus.lifepayment.lifePaymentRecordList}"
+			target="lifePaymentFacade.lifePaymentRecordList" convertor="lifePaymentConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.lifepayment.paymentTranType}"
+			target="lifePaymentFacade.paymentTranType" convertor="lifePaymentConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.midbus.lifepayment.lastPaymentRecord}" target="lifePaymentFacade.lastPaymentRecord"
+			convertor="lifePaymentConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.lifepayment.billInfo}"
+			target="lifePaymentFacade.billInfo" convertor="lifePaymentConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.lifepayment.paymentOfLife}"
+			target="lifePaymentFacade.paymentOfLife" convertor="lifePaymentConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.lifepayment.lifePaymentSign}"
+			target="lifePaymentFacade.lifePaymentSign" convertor="lifePaymentConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.midbus.lifepayment.lifePaymentUnwind}" target="lifePaymentFacade.lifePaymentUnwind"
+			convertor="lifePaymentConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.lifepayment.signInfo}"
+			target="lifePaymentFacade.signInfo" convertor="lifePaymentConvertor" />
+		<!-- 中间业务，生活缴费结束 -->
+		<!-- 中间业务，新广电 -->
+		<front:in-transform funcodes="${mobilebank.midbus.lifepayment.queryBroadcast}"
+			target="lifePaymentFacade.queryBroadcast" convertor="lifePaymentConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.lifepayment.paymentOfBroadcast}"
+			target="lifePaymentFacade.paymentOfBroadcast" convertor="lifePaymentConvertor" />
+		<!-- 中间业务，新广电结束 -->
+		<!-- 中间业务，手机充值 -->
+		<front:in-transform
+			funcodes="${mobilebank.midbus.mobilerecharge.mobileRechargeRecordList}"
+			target="mobileRechargeFacade.mobileRechargeRecordList" convertor="lifePaymentConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.midbus.mobilerecharge.lastMobileRecord}"
+			target="mobileRechargeFacade.lastMobileRecord" convertor="lifePaymentConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.midbus.mobilerecharge.mobileRecharge}" target="mobileRechargeFacade.mobileRecharge"
+			convertor="lifePaymentConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.midbus.mobilerecharge.mobileRechargeInfo}"
+			target="mobileRechargeFacade.mobileRechargeInfo" convertor="lifePaymentConvertor" />
+		<!-- 中间业务，手机充值结束 -->
+		<!-- 中间业务，社保缴费 -->
+		<front:in-transform
+			funcodes="${mobilebank.midbus.socialsecurity.querySocialSecurity}"
+			target="socialSecurityFacade.querySocialSecurity" convertor="socialSecurityConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.midbus.socialsecurity.paySocialSecurity}"
+			target="socialSecurityFacade.paySocialSecurity" convertor="socialSecurityConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.midbus.socialsecurity.socialSecurityRecordList}"
+			target="socialSecurityFacade.socialSecurityRecordList" convertor="socialSecurityConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.midbus.socialsecurity.lastSocialSecurityRecord}"
+			target="socialSecurityFacade.lastSocialSecurityRecord" convertor="socialSecurityConvertor" />
+		<!-- 中间业务，社保缴费结束 -->
+		<!-- 中间业务，长途车票 -->
+		<front:in-transform funcodes="${mobilebank.midbus.busticket.lastOrderTicket}"
+			target="busTicketFacade.lastOrderTicket" convertor="busTicketConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.busticket.queryStation}"
+			target="busTicketFacade.queryStation" convertor="busTicketConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.busticket.queryTrips}"
+			target="busTicketFacade.queryTrips" convertor="busTicketConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.busticket.getPassengerInfo}"
+			target="busTicketFacade.getPassengerInfo" convertor="busTicketConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.busticket.passengerInfo}"
+			target="busTicketFacade.passengerInfo" convertor="busTicketConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.busticket.orderTicket}"
+			target="busTicketFacade.orderTicket" convertor="busTicketConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.busticket.buyTicket}"
+			target="busTicketFacade.buyTicket" convertor="busTicketConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.midbus.busticket.queryAllOrderTicketInfo}"
+			target="busTicketFacade.queryAllOrderTicketInfo" convertor="busTicketConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.midbus.busticket.queryOrderTicketInfo}"
+			target="busTicketFacade.queryOrderTicketInfo" convertor="busTicketConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.busticket.cancelOrder}"
+			target="busTicketFacade.cancelOrder" convertor="busTicketConvertor" />
+		<!-- 中间业务，长途车票结束 -->
+		<!-- 中间业务，社保2017 -->
+		<front:in-transform funcodes="${mobilebank.midbus.socso2017.canApply}"
+			target="socso2017Facade.canApplySOCSO2017" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.socso2017.queryPersonInfo}"
+			target="socso2017Facade.queryPersonInfoForSOCSO2017" convertor="socso2017QueryConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.socso2017.submitPersonInfo}"
+			target="socso2017Facade.submitPersonInfoForSOCSO2017" convertor="socso2017SubmitPersonInfoConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.socso2017.join}"
+			target="socso2017Facade.joinSOCSO2017" convertor="socso2017JoinConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.socso2017.apply}"
+			target="socso2017Facade.applySOCSO2017" convertor="socso2017ApplyConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.socso2017.cancel}"
+			target="socso2017Facade.cancelSOCSO2017" convertor="socso2017PayConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.socso2017.pay}"
+			target="socso2017Facade.paySOCSO2017" convertor="socso2017PayConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.socso2017.queryPayment}"
+			target="socso2017Facade.queryPaymentForSOCSO2017" convertor="socso2017QueryConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.socso2017.submitContact}"
+			target="socso2017Facade.submitContactForSOCSO2017" convertor="socso2017ContactConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.socso2017.queryTransHistory}"
+			target="socso2017Facade.queryTransHistoryForSOCSO2017" convertor="socso2017QueryConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.socso2017.queryOrg}"
+			target="socso2017Facade.queryOrgForSOCSO2017" convertor="socso2017QueryConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.socso2017.queryBusinessCode}"
+			target="socso2017Facade.queryBusinessCodeForSOCSO2017" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.socso2017.queryNation}"
+			target="socso2017Facade.queryNationForSOCSO2017" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.socso2017.queryAAC009}"
+			target="socso2017Facade.queryAAC009ForSOCSO2017" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.socso2017.queryVillage}"
+			target="socso2017Facade.queryVillageForSOCSO2017" convertor="socso2017VillageConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.socso2017.queryCommunity}"
+			target="socso2017Facade.queryCommunityForSOCSO2017" convertor="socso2017VillageConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.socso2017.queryBusinessCode110Level}"
+			target="socso2017Facade.queryBusinessCode110LevelForSOCSO2017" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.socso2017.queryBusinessCode110LevelForSN}"
+			target="socso2017Facade.queryBusinessCode110LevelForSN" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.socso2017.queryBusinessCode390LevelForSN}"
+			target="socso2017Facade.queryBusinessCode390LevelForSN" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.socso2017.queryIdType}"
+			target="socso2017Facade.queryIdTypeForSOCSO2017" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.socso2017.queryAAC010}"
+			target="socso2017Facade.queryAAC010ForSOCSO2017" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.socso2017.queryNotice}"
+			target="socso2017Facade.queryNoticeForSOCSO2017" convertor="baseInputMsgConvertor" />
+		<!-- 中间业务，社保2017结束 -->
+		<!-- 智能转账，跨行转账 -->
+		<front:in-transform funcodes="${mobilebank.transfer.cross.getCity}"
+			target="crossTransferFacade.getCity" convertor="crossTransferConvertor" />
+		<front:in-transform funcodes="${mobilebank.transfer.cross.getBankBranch}"
+			target="crossTransferFacade.getBankBranch" convertor="crossTransferConvertor" />
+		<front:in-transform funcodes="${mobilebank.transfer.cross.getBank}"
+			target="crossTransferFacade.getBank" convertor="crossTransferConvertor" />
+		<front:in-transform funcodes="${mobilebank.transfer.cross.getTransHistory}"
+			target="crossTransferFacade.getTransHistory" convertor="crossTransferConvertor" />
+		<front:in-transform funcodes="${mobilebank.transfer.cross.crossSubmit}"
+			target="crossTransferFacade.crossSubmit" convertor="crossTransferConvertor" />
+		<front:in-transform funcodes="${mobilebank.transfer.cross.updateTransHistory}"
+			target="crossTransferFacade.updateTransHistory" convertor="crossTransferConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.transfer.cross.queryTransHistoryFromEDI}"
+			target="crossTransferFacade.queryTransHistoryFromEDI" convertor="crossTransferConvertor" />
+		<front:in-transform funcodes="${mobilebank.transfer.cross.qryPayeeDeptByAcNo}"
+			target="crossTransferFacade.qryPayeeDeptByAcNo" convertor="crossTransferConvertor" />
+		<front:in-transform funcodes="${mobilebank.transfer.cross.isSupportSeBank}"
+			target="crossTransferFacade.isSupportSeBank" convertor="crossTransferConvertor" />
+		<front:in-transform funcodes="${mobilebank.transfer.cross.isCheckFace}"
+			target="crossTransferFacade.isCheckFace" convertor="crossTransferConvertor" />
+		<!-- 智能转账，跨行转账结束 -->
+		<!-- 智能转账，行内转账 -->
+		<front:in-transform funcodes="${mobilebank.transfer.inner.getTransBill}"
+			target="innerTransferFacade.getTransBill" convertor="innerTransferConvertor" />
+		<front:in-transform funcodes="${mobilebank.transfer.inner.acNoType}"
+			target="innerTransferFacade.acNoType" convertor="innerTransferConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.transfer.inner.type1CardToType2Card}" target="innerTransferFacade.type1CardToType2Card"
+			convertor="innerTransferConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.transfer.inner.type2CardToType1Card}" target="innerTransferFacade.type2CardToType1Card"
+			convertor="innerTransferConvertor" />
+		<front:in-transform funcodes="${mobilebank.transfer.inner.innerSubmit}"
+			target="innerTransferFacade.innerSubmit" convertor="innerTransferConvertor" />
+		<front:in-transform funcodes="${mobilebank.transfer.inner.getLastAccount}"
+			target="innerTransferFacade.getLastAccount" convertor="innerTransferConvertor" />
+		<front:in-transform funcodes="${mobilebank.transfer.inner.getUserIAccountInfo}"
+			target="innerTransferFacade.getUserIAccountInfo" convertor="innerTransferConvertor" />
+		<front:in-transform funcodes="${mobilebank.transfer.inner.transferCreditCardSubmit}"
+			target="innerTransferFacade.transferCreditCardSubmit" convertor="creditCardRepaymentConvertor" />
+		<front:in-transform funcodes="${mobilebank.transfer.inner.queryTransferResult}"
+			target="innerTransferFacade.queryTransferResult" convertor="innerTransferConvertor" />
+		<!-- 智能转账，行内转账结束 -->
+		<!-- 智能转账，转账计划 -->
+		<front:in-transform funcodes="${mobilebank.transfer.plan.showTransferPlan}"
+			target="transferPlanFacade.showTransferPlan" convertor="transferPlanConvertor" />
+		<front:in-transform funcodes="${mobilebank.transfer.plan.deleteTransferPlan}"
+			target="transferPlanFacade.deleteTransferPlan" convertor="transferPlanConvertor" />
+		<front:in-transform funcodes="${mobilebank.transfer.plan.addTransferPlan}"
+			target="transferPlanFacade.addTransferPlan" convertor="transferPlanConvertor" />
+		<front:in-transform funcodes="${mobilebank.transfer.plan.getTransferPlanPJnl}"
+			target="transferPlanFacade.getTransferPlanPJnl" convertor="transferPlanConvertor" />
+		<front:in-transform funcodes="${mobilebank.transfer.plan.checkTransferPlan}"
+			target="transferPlanFacade.checkTransferPlan" convertor="transferPlanConvertor" />
+		<!-- 智能转账，转账计划结束 -->
+		
+		<!-- 获取一类户列表 -->
+		<front:in-transform funcodes="${mobilebank.account.getICardList}"
+			target="bankCardFacade.getICardList" convertor="getCardListConvertor" />
+		<!-- 设置二类户金额限制 -->
+		<front:in-transform funcodes="${mobilebank.account.setCardLimitAmount}"
+			target="bankCardFacade.setCardLimitAmount" convertor="bankPhoneConvertor" />
+		<!-- 贵金属新链接 -->
+		<front:in-transform funcodes="${mobilebank.mtlNew.mtlHome}"
+			target="mtlFacade.mtlHome" convertor="mtlConvertor" />
+		<front:in-transform funcodes="${mobilebank.mtlNew.mtlSigned}"
+			target="mtlFacade.mtlSigned" convertor="mtlConvertor" />
+		<front:in-transform funcodes="${mobilebank.mtlNew.mtlUpdateAcctNo}"
+			target="mtlFacade.mtlUpdateAcctNo" convertor="mtlConvertor" />
+		<front:in-transform funcodes="${mobilebank.mtlNew.mtlAppointmentGole}"
+			target="mtlFacade.mtlAppointmentGole" convertor="mtlConvertor" />
+		<front:in-transform funcodes="${mobilebank.mtlNew.mtlBuy}"
+			target="mtlFacade.mtlBuy" convertor="mtlConvertor" />
+		<front:in-transform funcodes="${mobilebank.mtlNew.mtlSale}"
+			target="mtlFacade.mtlSale" convertor="mtlConvertor" />
+		<front:in-transform funcodes="${mobilebank.mtlNew.mtlQuerySigned}"
+			target="mtlFacade.mtlQuerySigned" convertor="mtlConvertor" />
+		<front:in-transform funcodes="${mobilebank.mtlNew.mtlBuySubmit}"
+			target="mtlFacade.mtlBuySubmit" convertor="mtlConvertor" />
+		<front:in-transform funcodes="${mobilebank.mtlNew.mtlSaleSubmit}"
+			target="mtlFacade.mtlSaleSubmit" convertor="mtlConvertor" />
+		<front:in-transform funcodes="${mobilebank.mtlNew.mtlQueryGole}"
+			target="mtlFacade.mtlQueryGole" convertor="mtlConvertor" />
+		<front:in-transform funcodes="${mobilebank.mtlNew.mtlQueryPrice}"
+			target="mtlFacade.mtlQueryPrice" convertor="mtlConvertor" />
+		<front:in-transform funcodes="${mobilebank.mtlNew.mtlQueryDetail}"
+			target="mtlFacade.mtlQueryDetail" convertor="mtlConvertor" />
+		<front:in-transform funcodes="${mobilebank.mtlNew.mtlQueryAppointmentGole}"
+			target="mtlFacade.mtlQueryAppointmentGole" convertor="mtlConvertor" />
+		<front:in-transform funcodes="${mobilebank.mtlNew.mtlAppointmentGoleSubmit}"
+			target="mtlFacade.mtlAppointmentGoleSubmit" convertor="mtlConvertor" />
+		<front:in-transform funcodes="${mobilebank.mtlNew.mtlQueryAdvertList}"
+			target="mtlFacade.mtlQueryAdvertList" convertor="mtlConvertor" />
+		<front:in-transform funcodes="${mobilebank.mtlNew.mtlGetBranchInfo}"
+			target="mtlFacade.mtlGetBranchInfo" convertor="mtlConvertor" />
+		<front:in-transform funcodes="${mobilebank.mtlNew.mtlPriceList}"
+			target="mtlFacade.mtlPriceList" convertor="mtlConvertor" />
+		<front:in-transform funcodes="${mobilebank.mtlNew.mtlCancleSigned}"
+			target="mtlFacade.mtlCancleSigned" convertor="mtlConvertor" />
+		<!-- 实名认证开始 -->
+		<!-- <front:in-transform funcodes="${mobilebank.account.selfBankCardCertification}" 
+			target="realNameCertificationFacade.selfBankCardCertification" convertor="selfBankCardCertificationConvertor" 
+			/> -->
+		<!-- <front:in-transform funcodes="${mobilebank.account.otherBankCardCertification}" 
+			target="realNameCertificationFacade.otherBankCardCertification" convertor="otherBankCardCertificationConvertor" 
+			/> -->
+		<!-- 实名认证结束 -->
+		<!-- 统一支付开始 -->
+		<!-- <front:in-transform funcodes="${mobilebank.pay.confirmTransferData}" 
+			target="transPaymentFacade.confirmTransferData" convertor="transferPaymentConvertor" 
+			/> -->
+		<!-- <front:in-transform funcodes="${mobilebank.pay.checkPwdTransferData}" 
+			target="transPaymentFacade.checkPwdTransferData" convertor="transferPaymentConvertor" 
+			/> -->
+		<!-- <front:in-transform funcodes="${mobilebank.pay.checkSoundTransferData}" 
+			target="transPaymentFacade.checkSoundTransferData" convertor="transferPaymentConvertor" 
+			/> -->
+		<!-- <front:in-transform funcodes="${mobilebank.pay.getPaymentCards}" target="transPaymentFacade.getPaymentCards" 
+			convertor="getPaymentCardsConvertor" /> -->
+		<!-- 统一支付开结束 -->
+		<!-- 统一支付开始 -->
+		<front:in-transform funcodes="${mobilebank.pay.confirmTransferData}"
+			target="paymentFacade.confirmTransferData" convertor="paymentConvertor" />
+		<front:in-transform funcodes="${mobilebank.pay.checkPwdTransferData}"
+			target="paymentFacade.checkPwdTransferData" convertor="paymentConvertor" />
+		<front:in-transform funcodes="${mobilebank.pay.checkSoundTransferData}"
+			target="paymentFacade.checkSoundTransferData" convertor="paymentConvertor" />
+		<!--老的获取支付卡列表 -->
+		<front:in-transform funcodes="${mobilebank.pay.getPaymentCards}"
+			target="paymentFacade.getPaymentCards" convertor="getPaymentCardsConvertor" />
+		<front:in-transform funcodes="${mobilebank.pay.getAllPaymentCards}"
+			target="paymentFacade.getAllPaymentCards" convertor="getPaymentCardsConvertor" />
+		<!--验证ca五要素 -->
+		<front:in-transform funcodes="${mobilebank.pay.validationCA}"
+			target="paymentFacade.validationCA" convertor="paymentConvertor" />
+		<!-- ca流程走完后，接着走支付流程接口 -->
+		<front:in-transform funcodes="${mobilebank.pay.validCaSuccess}"
+			target="paymentFacade.validCaSuccess" convertor="paymentConvertor" />
+		<!-- 发送天府支付验证码 -->
+		<front:in-transform funcodes="${mobilebank.pay.sendTFPaySms}"
+			target="paymentFacade.sendTFPaySms" convertor="paymentConvertor" />
+		<!-- 统一支付开结束 -->
+
+		<!-- 四川CA开始 -->
+		<front:in-transform funcodes="${mobilebank.ca.certapply}"
+			target="cAFacade.certapply" convertor="cAConvertor" />
+		<front:in-transform funcodes="${mobilebank.ca.certverify}"
+			target="cAFacade.certverify" convertor="cAConvertor" />
+		<front:in-transform funcodes="${mobilebank.ca.certrevoke}"
+			target="cAFacade.certrevoke" convertor="cAConvertor" />
+		<!-- 四川CA接受 -->
+
+		<!-- 获奖记录 -->
+		<front:in-transform funcodes="${mobilebank.award.list}"
+			target="awardFacade.awdListAward" convertor="checkDrawOpportunityConvertor" />
+		<front:in-transform funcodes="${mobilebank.award.updateAddress}"
+			target="awardFacade.awdUpdateAddress" convertor="checkDrawOpportunityConvertor" />
+		<!--问题 -->
+		<front:in-transform funcodes="${mobilebank.answer.queryMyAnswer}"
+			target="answerFacade.queryMyAnswer" convertor="answerConvertor" />
+		<front:in-transform funcodes="${mobilebank.answer.createMyAnswer}"
+			target="answerFacade.createMyAnswer" convertor="answerConvertor" />
+		<front:in-transform funcodes="${mobilebank.answer.showAnswerList}"
+			target="answerFacade.showAnswerList" convertor="answerConvertor" />
+		<front:in-transform funcodes="${mobilebank.answer.showAnswerGroup}"
+			target="answerFacade.showAnswerGroup" convertor="answerConvertor" />
+		<front:in-transform funcodes="${mobilebank.answer.showCustomerPhones}"
+			target="answerFacade.showCustomerPhones" convertor="answerConvertor" />
+
+		<!-- 问题 -->
+		<!-- 抽奖机会判断 -->
+		<front:in-transform funcodes="${mobilebank.draw.isExitDrawChance}"
+			target="drawFacade.isExitDrawChance" convertor="drawConvertor" />
+		<!-- 抽奖机会判断 -->
+		<!-- 荐者有礼活动 -->
+		<front:in-transform funcodes="${mobilebank.activity.activityMain}"
+			target="activityFacade.activityMain" convertor="activityConvertor" />
+		<front:in-transform funcodes="${mobilebank.activity.toGetAward}"
+			target="activityFacade.toGetAward" convertor="activityConvertor" />
+		<front:in-transform funcodes="${mobilebank.activity.activityDetails}"
+			target="activityFacade.activityDetails" convertor="activityConvertor" />
+		<front:in-transform funcodes="${mobilebank.activity.activityQualification}"
+			target="activityFacade.activityQualification" convertor="activityConvertor" />
+		<front:in-transform funcodes="${mobilebank.activity.getScore}"
+			target="activityFacade.getScore" convertor="activityConvertor" />
+		<!-- 荐者有礼活动 -->
+		<!-- 积分兑换活动 -->
+		<front:in-transform funcodes="${mobilebank.activity.getScoreActivityList}"
+			target="activityFacade.getScoreActivityList" convertor="activityConvertor" />
+		<front:in-transform funcodes="${mobilebank.activity.getScoreActivityAward}"
+			target="activityFacade.getScoreActivityAward" convertor="activityConvertor" />
+		<!-- 积分兑换活动 -->
+		<!--抽奖 -->
+		<front:in-transform funcodes="${mobilebank.user.queryLuckDrawCounts}"
+			target="luckDrawFacade.queryLuckDrawCounts" convertor="luckDrawConvertor" />
+		<!-- 抽奖 -->
+		<!--景点门票管理 -->
+		<front:in-transform funcodes="${mobilebank.midbus.sceneTicket.getSceneries}"
+			target="sceneTicketFacade.getSceneries" convertor="sceneTicketConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.sceneTicket.getTickets}"
+			target="sceneTicketFacade.getTickets" convertor="sceneTicketConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.midbus.sceneTicket.getTicketCanReserveDate}"
+			target="sceneTicketFacade.getTicketCanReserveDate" convertor="sceneTicketConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.sceneTicket.createOrder}"
+			target="sceneTicketFacade.createOrder" convertor="sceneTicketConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.sceneTicket.orderToPay}"
+			target="sceneTicketFacade.orderToPay" convertor="sceneTicketConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.midbus.sceneTicket.cancelSceneTicketOrder}"
+			target="sceneTicketFacade.cancelSceneTicketOrder" convertor="sceneTicketConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.sceneTicket.getOrderStatus}"
+			target="sceneTicketFacade.getOrderStatus" convertor="sceneTicketConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.sceneTicket.getOrderList}"
+			target="sceneTicketFacade.getOrderList" convertor="sceneTicketConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.sceneTicket.deleteOrder}"
+			target="sceneTicketFacade.deleteOrder" convertor="sceneTicketConvertor" />
+		<!-- 景点门票管理 -->
+
+		<!--交叉认证 -->
+		<front:in-transform funcodes="${mobilebank.cc.getUserInfo}"
+			target="crossValidationFacade.getUserInfo" convertor="crossValidationConvertor" />
+		<front:in-transform funcodes="${mobilebank.cc.getCVKey}"
+			target="cCGetCVKeyFacade.getCVKey" convertor="cCGetCVKeyConvertor" />
+		<front:in-transform funcodes="${mobilebank.cc.getH5SystemInfo}"
+			target="cCGetCVKeyFacade.getH5SystemInfo" convertor="cCGetCVKeyConvertor" />
+		<!--交叉认证 -->
+
+		<!--sm2服务端随机数 -->
+		<front:in-transform funcodes="${mobilebank.cc.getRanDomById}"
+			target="cCGetRanDomByIdFacade.getRanDomUUID" convertor="cCGetRanDomByIdConvertor" />
+		<!--sm2服务端随机数 -->
+
+		<!-- 基金 -->
+		<front:in-transform funcodes="${mobilebank.fund.queryRiskGrade}"
+			target="fundRiskGradeFacade.fndQueryRiskGrade" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.queryRiskPaper}"
+			target="fundRiskGradeFacade.fndQueryRiskPaper" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.submitRiskPaper}"
+			target="fundRiskGradeFacade.fndSubmitRiskPaper" convertor="fundRiskGradeConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.matchRisk}"
+			target="fundRiskGradeFacade.fndMatchRisk" convertor="fundRiskGradeConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.getCustomerInfo}"
+			target="fundGeneralFacade.fndGetCustomerInfo" convertor="fundSignConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.list}"
+			target="fundGeneralFacade.fndGetFundList" convertor="fundProfileConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.queryQuota}"
+			target="fundGeneralFacade.fndGetFundQuota" convertor="fundProfileConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.queryFeeRate}"
+			target="fundGeneralFacade.fndGetFundFeeRate" convertor="fundProfileConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.listNav}"
+			target="fundGeneralFacade.fndGetFundNavList" convertor="fundProfileConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.listTA}"
+			target="fundGeneralFacade.fndListTA" convertor="fundProfileConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.listDividendMethod}"
+			target="fundGeneralFacade.fndListDividendMethod" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.queryTransHistoryType}"
+			target="fundGeneralFacade.fndListTransHistoryType" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.queryBalance}"
+			target="fundGeneralFacade.fndGetBalance" convertor="fundSignConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.queryHolding}"
+			target="fundGeneralFacade.fndGetFundHolding" convertor="fundProfileConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.queryWaiting}"
+			target="fundGeneralFacade.fndGetFundWaiting" convertor="fundProfileConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.querySchedule}"
+			target="fundGeneralFacade.fndGetFundSchedule" convertor="fundScheduleConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.queryTransHistory}"
+			target="fundGeneralFacade.fndGetFundTransHistory" convertor="fundProfileConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.changeFundCard}"
+			target="fundGeneralFacade.fndChangeFundCard" convertor="fundSignConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.changeDividendMethod}"
+			target="fundGeneralFacade.fndChangeDividendMethod" convertor="fundSignConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.sign}"
+			target="fundGeneralFacade.fndSign" convertor="fundSignConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.buy}"
+			target="fundGeneralFacade.fndBuy" convertor="fundTradeConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.revoke}"
+			target="fundGeneralFacade.fndRevoke" convertor="fundTradeConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.redeem}"
+			target="fundGeneralFacade.fndRedeem" convertor="fundTradeConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.buySchedule}"
+			target="fundGeneralFacade.fndBuySchedule" convertor="fundScheduleConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.stopSchedule}"
+			target="fundGeneralFacade.fndStopSchedule" convertor="fundScheduleConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.bulletin.list}"
+			target="fundBulletinFacade.fndListBulletin" convertor="fundProfileConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.favorite.list}"
+			target="fundFavFacade.fndShowFavorites" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.favorite.add}"
+			target="fundFavFacade.fndAddFavorites" convertor="fundFavConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.favorite.remove}"
+			target="fundFavFacade.fndRemoveFavorites" convertor="fundFavConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.detail}"
+			target="fundGeneralFacade.fndGetFundDetail" convertor="fundProfileConvertor" />
+		<!-- 基金结束 -->
+		<!-- 基金,润金宝 -->
+		<front:in-transform funcodes="${mobilebank.fund.runjin.queryHistory}"
+			target="fundRunJinFacade.queryRunJinHistory" convertor="fundProfileConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.runjin.sign}"
+			target="fundRunJinFacade.signRunJin" convertor="fundSignConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.runjin.buy}"
+			target="fundRunJinFacade.buyRunJin" convertor="fundTradeConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.runjin.redeem}"
+			target="fundRunJinFacade.redeemRunJin" convertor="fundTradeConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.runjin.queryIncome}"
+			target="fundRunJinFacade.queryRunJinIncome" convertor="fundProfileConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.runjin.queryIncomeHistory}"
+			target="fundRunJinFacade.queryRunJinIncomeHistory" convertor="fundProfileConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.runjin.queryTransHistory}"
+			target="fundRunJinFacade.queryRunJinTransHistory" convertor="fundProfileConvertor" />
+		<!-- 基金,润金宝结束 -->
+		<!-- 基金,熊猫宝 -->
+		<front:in-transform funcodes="${mobilebank.fund.panda.sign}"
+			target="fundPandaFacade.signPanda" convertor="fundSignConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.panda.queryIncome}"
+			target="fundPandaFacade.queryPandaIncome" convertor="fundProfileConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.panda.queryHistory}"
+			target="fundPandaFacade.queryPandaHistory" convertor="fundProfileConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.panda.buy}"
+			target="fundPandaFacade.buyPanda" convertor="fundTradeConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.panda.redeem}"
+			target="fundPandaFacade.redeemPanda" convertor="fundTradeConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.panda.saveConfirmInfo}"
+			target="fundPandaFacade.savePandaConfirmInfo" convertor="fundTradePandaConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.panda.getConfirmInfo}"
+			target="fundPandaFacade.getPandaConfirmInfo" convertor="fundTradePandaConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.panda.queryIncomeHistory}"
+			target="fundPandaFacade.queryPandaIncomeHistory" convertor="fundProfileConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.panda.queryButtonStatus}"
+			target="fundPandaFacade.queryPandaButtonStatus" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.panda.queryRMDLMT}"
+			target="fundPandaFacade.queryPandaRMDLMT" convertor="fundProfileConvertor" />
+		<!-- 基金,熊猫宝结束 -->
+		<!-- 基金,汇金卡 -->
+		<front:in-transform funcodes="${mobilebank.fund.hjcard.check}"
+			target="fundHJCardFacade.checkHJCard" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.hjcard.show}"
+			target="fundHJCardFacade.showHJCardInfo" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.hjcard.queryIncomeHistory}"
+			target="fundHJCardFacade.queryHJIncomeHistory" convertor="fundProfileConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.hjcard.getHoldBalance}"
+			target="fundHJCardFacade.getHJHoldBalance" convertor="fundScheduleConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.hjcard.setHoldBalance}"
+			target="fundHJCardFacade.setHJHoldBalance" convertor="fundScheduleConvertor" />
+		<!-- 基金,汇金卡结束 -->
+		<!-- 基金,天府投顾 -->
+		<front:in-transform funcodes="${mobilebank.fund.tftg.recommend}"
+			target="fundTFTGAllocationFacade.recommendAllocation" convertor="fundTFTGAllocationConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.tftg.queryPosition}"
+			target="fundTFTGPositionFacade.queryTFTGPosition" convertor="fundTFTGAllocationConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.tftg.queryPositionDetail}"
+			target="fundTFTGPositionFacade.queryTFTGPositionDetail" convertor="fundTFTGAllocationConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.tftg.preOrder}"
+			target="fundTFTGTradeFacade.estimateTFTG" convertor="fundTFTGAllocationConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.tftg.reOrder}"
+			target="fundTFTGTradeFacade.estimateReTFTG" convertor="fundTFTGAllocationConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.tftg.redeemable}"
+			target="fundTFTGTradeFacade.redeemable" convertor="fundTFTGAllocationConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.tftg.buy}"
+			target="fundTFTGTradeFacade.buyTFTG" convertor="fundTFTGAllocationTradeConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.tftg.redeem}"
+			target="fundTFTGTradeFacade.redeemTFTG" convertor="fundTFTGAllocationTradeConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.tftg.queryMessages}"
+			target="fundTFTGMsgFacade.queryTFTGMessage" convertor="fundTFTGMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.fund.tftg.hideMessage}"
+			target="fundTFTGMsgFacade.hideTFTGMessage" convertor="fundTFTGMsgConvertor" />
+		<!-- 基金,天府投顾结束 -->
+		<!-- 易贷开始 -->
+		<front:in-transform funcodes="${mobilebank.loan.easyLoan.activeCreditQuery}"
+			target="easyLoanFacade.activeCreditQuery" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.easyLoan.credReportRequest}"
+			target="easyLoanFacade.credReportRequest" convertor="creditProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.easyLoan.modifyCustInfo}"
+			target="easyLoanFacade.modifyCustInfo" convertor="modifyCustInfoConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.easyLoan.useApply}"
+			target="easyLoanFacade.useApply" convertor="useApplyConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.easyLoan.busiPutOut}"
+			target="easyLoanFacade.busiPutOut" convertor="useApplyConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.easyLoan.contHistoryQuery}"
+			target="easyLoanFacade.contHistoryQuery" convertor="creditProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.easyLoan.activeCreditDestory}"
+			target="easyLoanFacade.activeCreditDestory" convertor="creditProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.easyLoan.useApplyResultQuery}"
+			target="easyLoanFacade.useApplyResultQuery" convertor="useApplyConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.easyLoan.queryRepayType}"
+			target="easyLoanFacade.queryRepayType" convertor="creditProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.easyLoan.signSealPdf}"
+			target="easyLoanFacade.signSealPdf" convertor="easyLoanSignSealConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.easyLoan.queryRate}"
+			target="easyLoanFacade.queryRate" convertor="useApplyConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.easyLoan.queryUserInfo}"
+			target="easyLoanFacade.queryUserInfo" convertor="creditProductConvertor" />
+
+		<front:in-transform funcodes="${mobilebank.loan.queryRepayDetail}"
+			target="loanFacade.queryRepayDetail" convertor="queryLoanInfoConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.loanRepayment}"
+			target="loanFacade.loanRepayment" convertor="loanRepaymentConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.instalmentsBeforehand}"
+			target="loanFacade.instalmentsBeforehand" convertor="interestCalculateConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.beforehandRepay}"
+			target="loanFacade.beforehandRepay" convertor="interestCalculateConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.queryLoanDetail}"
+			target="loanFacade.queryLoanDetail" convertor="queryLoanInfoConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.getCardAvailBal}"
+			target="loanFacade.getCardAvailBal" convertor="queryLoanInfoConvertor" />
+        <front:in-transform funcodes="${mobilebank.loan.creditLoanSignCA}"
+          	target="loanFacade.creditLoanSignCA" convertor="creditLoanSignCaConvertor" />
+		<!-- 精英贷 -->
+		<front:in-transform funcodes="${mobilebank.creditLoan.drawHintMsg}"
+			target="creditLoanFacade.drawHintMsg" convertor="creditProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditLoan.queryEliteApplyList}"
+			target="creditLoanFacade.queryEliteApplyList" convertor="creditProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditLoan.queryEliteCeiling}"
+			target="creditLoanFacade.queryEliteCeiling" convertor="creditProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.eliteLoan.queryCycleCredit}"
+			target="eliteLoanFacade.queryCycleCredit" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.eliteLoan.occupyCredit}"
+			target="eliteLoanFacade.occupyCredit" convertor="eliteLoanInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.eliteLoan.queryLoanRate}"
+			target="eliteLoanFacade.queryLoanRate" convertor="queryEliteLoanRateConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.eliteLoan.queryLoan}"
+			target="eliteLoanFacade.queryLoan" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.eliteLoan.queryRepayType}"
+			target="eliteLoanFacade.queryRepayType" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.eliteLoan.queryProgress}"
+			target="eliteLoanFacade.queryEliteProgress" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.queryRepaySchedule}"
+			target="loanFacade.queryRepaySchedule" convertor="queryLoanInfoConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.eliteLoan.queryTerm}"
+			target="eliteLoanFacade.queryEliteTerm" convertor="querySchedulesInputMsgConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.loan.eliteLoan.queryRepaySchedulesBeforeLoan}"
+			target="eliteLoanFacade.queryEliteRepaySchedulesBeforeLoan"
+			convertor="querySchedulesInputMsgConvertor" />
+		<!-- 精英贷end -->
+		<!-- 零钱包 -->
+		<front:in-transform funcodes="${mobilebank.coinpurse.applyCoinpurse}"
+				target="coinpurseFacade.applyCoinpurse" convertor="coinpurseProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.coinpurse.queryCoinpurse}"
+				target="coinpurseFacade.queryCoinpurse" convertor="coinpurseProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.coinpurse.validateBankCardPwd}"
+				target="coinpurseFacade.validateBankCardPwd" convertor="coinpurseProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.coinpurse.cancelCoinpurse}"
+				target="coinpurseFacade.cancelCoinpurse" convertor="coinpurseProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.coinpurse.setCoinpurse}"
+				target="coinpurseFacade.setCoinpurse" convertor="coinpurseProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.coinpurse.getAllAcon}"
+				target="coinpurseFacade.getAllAcon" convertor="coinpurseProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.coinpurse.getuserInfoForRSS}"
+				target="coinpurseFacade.getuserInfoForRSS" convertor="coinpurseProductConvertor" />
+		<!-- 零钱包END -->
+		<!-- 个人贷款 -->
+		<front:in-transform funcodes="${mobilebank.loan.mycredit.queryLoans}"
+			target="mycredit.queryLoans" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.mycredit.queryPaymentPlan}"
+			target="mycredit.queryPaymentPlan" convertor="mycreditInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.mycredit.queryLoanInfo}"
+			target="mycredit.queryLoanInfo" convertor="mycreditInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.mycredit.queryLoanCards}"
+			target="mycredit.queryLoanCards" convertor="mycreditInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.mycredit.submit}"
+			target="mycredit.submit" convertor="innerTransferLoanConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.mycredit.queryLoanList}"
+			target="mycredit.queryLoanList" convertor="mycreditInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.mycredit.queryLoanApplyDetail}"
+			target="mycredit.queryLoanApplyDetail" convertor="mycreditInputMsgConvertor" />
+		<!-- 个人贷款 end -->
+		
+		
+		<!-- 提前预约还款-->
+		<front:in-transform funcodes="${mobilebank.loan.subscribeRepay.applySubscribeRepay}"
+			target="subscribeRepay.applySubscribeRepay" convertor="creditProductConvertor" />
+		
+		<front:in-transform funcodes="${mobilebank.loan.subscribeRepay.querySubscribeRepay}"
+			target="subscribeRepay.querySubscribeRepay" convertor="creditProductConvertor" />
+		
+		<front:in-transform funcodes="${mobilebank.loan.subscribeRepay.querySubscribeRepayList}"
+			target="subscribeRepay.querySubscribeRepayList" convertor="creditProductConvertor" />
+		
+		<front:in-transform funcodes="${mobilebank.loan.subscribeRepay.cancelSubscribeRepay}"
+			target="subscribeRepay.cancelSubscribeRepay" convertor="creditProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.subscribeRepay.trial}"
+			target="subscribeRepay.trial" convertor="creditProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.subscribeRepay.applyHomeLoan}"
+			target="subscribeRepay.applyHomeLoan" convertor="homeLoanApplyInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.subscribeRepay.queryHomeLoanStatu}"
+			target="subscribeRepay.queryHomeLoanStatu" convertor="creditProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.loan.subscribeRepay.queryBranchByAddress}"
+			target="subscribeRepay.queryBranchByAddress" convertor="creditProductConvertor" />
+		
+		
+		<front:in-transform funcodes="${mobilebank.loan.subscribeRepay.querySpplierLoanStatu}"
+			target="subscribeRepay.querySpplierLoanStatu" convertor="creditProductConvertor" />
+		
+		<front:in-transform funcodes="${mobilebank.loan.subscribeRepay.spplierLoanCreditApply}"
+			target="subscribeRepay.spplierLoanCreditApply" convertor="homeLoanApplyInputMsgConvertor" />
+		
+		
+		
+		
+		<front:in-transform funcodes="${mobilebank.loan.subscribeRepay.queryEliteApplyDetail}"
+			target="subscribeRepay.queryEliteApplyDetail" convertor="creditProductConvertor" />
+		
+		
+		
+		<front:in-transform funcodes="${mobilebank.loan.formProduct.getLoanFormDetail}"
+			target="loanFormProductFacade.getLoanFormDetail" convertor="loanFormInputMsgConvertor" />
+		
+		
+		<front:in-transform funcodes="${mobilebank.loan.formProduct.getFatureLoanProduct}"
+			target="loanFormProductFacade.getFatureLoanProduct" convertor="loanFormInputMsgConvertor" />
+		
+		
+		<!--提前预约还款 end -->
+		
+		<!-- 考勤 -->
+		<front:in-transform funcodes="${mobilebank.account.attendance.attendanceInfo}"
+			target="attendanceFacade.attendanceInfo" convertor="attendanceConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.attendance.signIn}"
+			target="attendanceFacade.signIn" convertor="attendanceConvertor" />
+		<!-- 考勤结束 -->
+
+		<!-- 交警-熊猫驾信 -->
+
+		<front:in-transform funcodes="${mobilebank.violation.subscribeSearch}"
+			target="violationFacade.subscribeSearch" convertor="violationConvertor" />
+		<front:in-transform funcodes="${mobilebank.violation.pay}"
+			target="violationFacade.pay" convertor="violationConvertor" />
+
+		<front:in-transform funcodes="${mobilebank.violation.queryRecordList}"
+			target="violationFacade.queryRecordList" convertor="violationConvertor" />
+		<front:in-transform funcodes="${mobilebank.violation.addCar}"
+			target="violationFacade.addCar" convertor="carConvertor" />
+		<front:in-transform funcodes="${mobilebank.violation.deleteCar}"
+			target="violationFacade.deleteCar" convertor="carConvertor" />
+		<front:in-transform funcodes="${mobilebank.violation.queryCarList}"
+			target="violationFacade.queryCarList" convertor="carConvertor" />
+		<front:in-transform funcodes="${mobilebank.violation.addMessageSubscribe}"
+			target="violationFacade.addMessageSubscribe" convertor="carConvertor" />
+		<front:in-transform funcodes="${mobilebank.violation.delMessageSubscribe}"
+			target="violationFacade.delMessageSubscribe" convertor="carConvertor" />
+		<front:in-transform funcodes="${mobilebank.violation.queryCarViolation}"
+			target="violationFacade.queryCarViolation" convertor="carConvertor" />
+		<front:in-transform funcodes="${mobilebank.violation.queryCarTypeList}"
+			target="violationFacade.queryCarTypeList" convertor="carConvertor" />
+		<front:in-transform funcodes="${mobilebank.violation.queryViolationInfo}"
+			target="violationFacade.queryViolationInfo" convertor="violationConvertor" />
+		<front:in-transform funcodes="${mobilebank.violation.shoulderViolation}"
+			target="violationFacade.shoulderViolation" convertor="violationConvertor" />
+
+		<!-- 推荐人 -->
+		<front:in-transform funcodes="${mobilebank.spread.getSpreadUser}"
+			target="spreadUserFacade.getSpreadUser" convertor="userSpreadConvertor" />
+		<front:in-transform funcodes="${mobilebank.spread.updateMySpread}"
+			target="spreadUserFacade.updateMySpread" convertor="userSpreadConvertor" />
+		<front:in-transform funcodes="${mobilebank.spread.insertMySpread}"
+			target="spreadUserFacade.insertMySpread" convertor="userSpreadConvertor" />
+
+		<!-- 信用卡 -->
+		<front:in-transform funcodes="${mobilebank.creditcard.queryCreditCards}"
+			target="creditCardFacade.queryCreditCards" convertor="creditCardBaseConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.creditcard.queryBillInfoByIndexPage}" target="creditCardFacade.queryBillInfoByIndexPage"
+			convertor="creditCardQueryRepaymentConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditcard.manageCreditCards}"
+			target="creditCardFacade.manageCreditCards" convertor="creditCardBaseConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditcard.creditCardLoss}"
+			target="creditCardFacade.creditCardLoss" convertor="creditCardLossConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditcard.getCreditCardLossDes}"
+			target="creditCardFacade.getCreditCardLossDes" convertor="creditCardBaseConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditcard.queryCashUseings}"
+			target="creditCardFacade.queryCashUseings" convertor="creditCardBaseConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditcard.queryCardToAddressInfo}"
+			target="creditCardFacade.queryCardToAddressInfo" convertor="creditCardBaseConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditcard.getBranchBankInfo}"
+			target="creditCardFacade.getBranchBankInfo" convertor="creditCardBaseConvertor" />
+		<!-- 修改为信贷专用中国省市区取值 -->
+		<front:in-transform funcodes="${mobilebank.creditcard.getRegionInfo}"
+			target="creditLoanFacade.getRegionInfo" convertor="creditProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditcard.creditCardReTransact}"
+			target="creditCardFacade.creditCardReTransact" convertor="creditCardReTransactConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditcard.queryRepaymentInfo}"
+			target="creditCardFacade.queryRepaymentInfo" convertor="creditCardQueryRepaymentConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.creditcard.getCreditCardSettingInfo}" target="creditCardFacade.getCreditCardSettingInfo"
+			convertor="creditCardBaseConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditcard.creditCardTransPwdSet}"
+			target="creditCardFacade.creditCardTransPwdSet" convertor="creditCardPwdSettingConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditcard.creditCardQueryPwdSet}"
+			target="creditCardFacade.creditCardQueryPwdSet" convertor="creditCardPwdSettingConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditcard.activeCreditCard}"
+			target="creditCardFacade.activeCreditCard" convertor="creditCardActivitionConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditcard.creditCardCashAdvance}"
+			target="creditCardFacade.creditCardCashAdvance" convertor="creditCardCashAdvanceConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditcard.queryBillInfo}"
+			target="creditCardFacade.queryBillInfo" convertor="creditCardBillInfoConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.creditcard.creditCardApplyValidation}" target="creditCardFacade.creditCardApplyValidation"
+			convertor="creditCardBaseConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditcard.updateQueryPwd}"
+			target="creditCardFacade.updateQueryPwd" convertor="creditCardUpdatePwdConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditcard.getAutoRepaymentInfo}"
+			target="creditCardFacade.getAutoRepaymentInfo" convertor="creditCardAutoRepaymentConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.creditcard.queryBillInstallmentInfo}" target="creditCardFacade.queryBillInstallmentInfo"
+			convertor="creditCardInstallmentConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditcard.queryInstallmentInfo}"
+			target="creditCardFacade.queryInstallmentInfo" convertor="creditCardInstallmentConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.creditcard.queryCashInstallmentProductor}"
+			target="creditCardFacade.queryCashInstallmentProductor" convertor="creditCardBaseConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditcard.creditCardInstallment}"
+			target="creditCardFacade.creditCardInstallment" convertor="creditCardInstallmentConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditcard.creditCardApplyExist}"
+			target="creditCardFacade.creditCardApplyExist" convertor="creditCardLevelValidationConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditcard.creditCardApply}"
+			target="creditCardFacade.creditCardApply" convertor="creditCardApplyConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditcard.creditCardRepayment}"
+			target="creditCardFacade.creditCardRepayment" convertor="creditCardRepaymentConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.creditcard.queryCreditCardApplyProcess}"
+			target="creditCardFacade.queryCreditCardApplyProcess" convertor="creditCardProcessConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditcard.reckonInstallmentRate}"
+			target="creditCardFacade.reckonInstallmentRate" convertor="reckonInstallmentRateConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.creditcard.creditCardApplyReSession}" target="creditCardFacade.creditCardApplyReSession"
+			convertor="creditCardBaseConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditcard.secureLockAct}"
+			target="creditCardFacade.secureLockAct" convertor="creditCardSecureLockConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditcard.getMobilePhone}"
+			target="creditCardFacade.getMobilePhone" convertor="creditCardMobilePhoneConvertor" />
+		
+		<!-- 学费 -->
+		<front:in-transform funcodes="${mobilebank.midbus.getSchoolAreaCodeList}"
+			target="tuitionFacade.getSchoolAreaCodeList" convertor="tuitionBaseConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.getSchoolList}"
+			target="tuitionFacade.getSchoolList" convertor="tuitionSchoolConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.getCollInfoBySchoolCode}"
+			target="tuitionFacade.getCollInfoBySchoolCode" convertor="tuitionSchoolConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.getClassInfoByGradeCode}"
+			target="tuitionFacade.getClassInfoByGradeCode" convertor="tuitionSchoolConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.getGradeInfoByCollCode}"
+			target="tuitionFacade.getGradeInfoByCollCode" convertor="tuitionSchoolConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.qryCtnTuitionInfo}"
+			target="tuitionFacade.qryCtnTuitionInfo" convertor="tuitionQueryConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.qryCtnTuitionInfoTrain}"
+			target="tuitionFacade.qryCtnTuitionInfoTrain" convertor="tuitionQueryConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.qryCtnTuitionInfoXxw}"
+			target="tuitionFacade.qryCtnTuitionInfoXxw" convertor="tuitionQueryConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.queryTuitionHisInfo}"
+			target="tuitionFacade.queryTuitionHisInfo" convertor="tuitionQueryConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.paymentTuitionInfo}"
+			target="tuitionFacade.paymentTuitionInfo" convertor="tuitionPaymentConvertor" />
+		<!--签到 -->
+		<front:in-transform funcodes="${mobilebank.sign.isSign}"
+			target="userSignFacade.isSign" convertor="userSignConvertor" />
+		<front:in-transform funcodes="${mobilebank.sign.userSignInfo}"
+			target="userSignFacade.userSignInfo" convertor="userSignConvertor" />
+		<front:in-transform funcodes="${mobilebank.sign.userSign}"
+			target="userSignFacade.userSign" convertor="userSignConvertor" />
+		<!--积分 -->
+		<front:in-transform funcodes="${mobilebank.score.queryTotalScore}"
+			target="scoreFacade.queryTotalScore" convertor="scoreConvertor" />
+		<front:in-transform funcodes="${mobilebank.score.scoreDetailList}"
+			target="scoreFacade.scoreDetailList" convertor="scoreConvertor" />
+		<front:in-transform funcodes="${mobilebank.score.scoreLuckDraw}"
+			target="scoreFacade.scoreLuckDraw" convertor="scoreConvertor" />
+		<!-- 银联二维码平台 -->
+		<front:in-transform funcodes="${mobilebank.quickmark.queryQuickmarkCode}"
+			target="quickmarkFacade.queryQuickmarkCode" convertor="quickmarkRequestConvertor" />
+		<front:in-transform funcodes="${mobilebank.quickmark.signProtocol}"
+			target="quickmarkFacade.signProtocol" convertor="quickmarkRequestConvertor" />
+		<front:in-transform funcodes="${mobilebank.quickmark.bindBankCard}"
+			target="quickmarkFacade.bindBankCard" convertor="quickmarkRequestConvertor" />
+		<front:in-transform funcodes="${mobilebank.quickmark.queryBindCard}"
+			target="quickmarkFacade.queryBindCard" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.quickmark.queryScanResult}"
+			target="quickmarkFacade.queryScanResult" convertor="quickmarkRequestConvertor" />
+		<front:in-transform funcodes="${mobilebank.quickmark.queryPaymentDetail}"
+			target="quickmarkFacade.queryUnionPayDetail" convertor="quickmarkRequestConvertor" />
+		<front:in-transform funcodes="${mobilebank.quickmark.querySignMsg}"
+			target="quickmarkFacade.querySignMsg" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.quickmark.quickmarkScan}"
+			target="quickmarkFacade.quickmarkScan" convertor="quickmarkRequestConvertor" />
+		<front:in-transform funcodes="${mobilebank.quickmark.circular}"
+			target="quickmarkFacade.circular" convertor="quickmarkRequestConvertor" />
+		<front:in-transform funcodes="${mobilebank.quickmark.specialOffer}"
+			target="quickmarkFacade.specialOffer" convertor="quickmarkRequestConvertor" />
+		<front:in-transform funcodes="${mobilebank.quickmark.queryConsumptionResult}"
+			target="quickmarkFacade.queryConsumptionResult" convertor="quickmarkRequestConvertor" />
+		<front:in-transform funcodes="${mobilebank.quickmark.consumption}"
+			target="quickmarkFacade.consumption" convertor="quickmarkRequestConvertor" />
+		<front:in-transform funcodes="${mobilebank.quickmark.needPwd}"
+			target="quickmarkFacade.needPwd" convertor="quickmarkRequestConvertor" />
+		<!-- 天府支付付款码 -->
+		<!-- 获取支付码-->
+		<front:in-transform funcodes="${mobilebank.busScanCode.payCode}"
+			target="busScanCodeFacade.payCode" convertor="busScanCodeConvertor" />
+		<!-- 签约-->
+		<front:in-transform funcodes="${mobilebank.busScanCode.signContract}"
+			target="busScanCodeFacade.signContract" convertor="busScanCodeConvertor" />
+		<!-- 解约-->
+		<front:in-transform funcodes="${mobilebank.busScanCode.cancelSignContract}"
+			target="busScanCodeFacade.cancelSignContract" convertor="busScanCodeConvertor" />
+		<!-- 扫码支付-->
+		<front:in-transform funcodes="${mobilebank.busScanCode.scanCodePay}"
+			target="busScanCodeFacade.scanCodePay" convertor="busScanCodeConvertor" />
+		<!-- 交易查询-->
+		<front:in-transform funcodes="${mobilebank.busScanCode.scanCodeQueryTradeList}"
+			target="busScanCodeFacade.scanCodeQueryTradeList" convertor="busScanCodeConvertor" />
+		<!-- 签约查询-->
+		<front:in-transform funcodes="${mobilebank.busScanCode.scanCodeCheckUser}"
+			target="busScanCodeFacade.scanCodeCheckUser" convertor="busScanCodeConvertor" />
+		<!-- 用户签约信息查询-->
+		<front:in-transform funcodes="${mobilebank.busScanCode.scanCodeQueryUserInfo}"
+			target="busScanCodeFacade.scanCodeQueryUserInfo" convertor="busScanCodeConvertor" />
+		<!-- 获取扫码布局-->
+		<front:in-transform funcodes="${mobilebank.busScanCode.getMenu}"
+			target="busScanCodeFacade.getMenu" convertor="busScanCodeConvertor" />
+		<!-- 获取乘车码路线-->
+		<front:in-transform funcodes="${mobilebank.busScanCode.getBusRoad}"
+			target="busScanCodeFacade.getBusRoad" convertor="busScanCodeConvertor" />
+		<!-- 轮循接口-->
+		<front:in-transform funcodes="${mobilebank.busScanCode.queryBusScanResult}"
+			target="busScanCodeFacade.queryBusScanResult" convertor="busScanCodeConvertor" />
+		<!-- 验证支付卡类型 -->
+		<front:in-transform funcodes="${mobilebank.busScanCode.checkCardPhone}"
+			target="busScanCodeFacade.checkCardPhone" convertor="busScanCodeConvertor" />
+		<!-- 支付功能开启 -->
+		<front:in-transform funcodes="${mobilebank.busScanCode.scanCodeStartUse}"
+			target="busScanCodeFacade.scanCodeStartUse" convertor="busScanCodeConvertor" />
+		<!-- 支付功能停用 -->
+		<front:in-transform funcodes="${mobilebank.busScanCode.scanCodePause}"
+			target="busScanCodeFacade.scanCodePause" convertor="busScanCodeConvertor" />
+		<!-- 用户权益查询 -->
+		<front:in-transform funcodes="${mobilebank.busScanCode.scanCodeRightsSearch}"
+			target="busScanCodeFacade.scanCodeRightsSearch" convertor="busScanCodeConvertor" />
+		<!-- 增加推荐人-->
+		<front:in-transform funcodes="${mobilebank.busScanCode.scanCodeAddRecommend}"
+			target="busScanCodeFacade.scanCodeAddRecommend" convertor="busScanCodeConvertor" />
+		<!-- 查询推荐人-->
+		<front:in-transform funcodes="${mobilebank.busScanCode.scanCodeQueryRecommender}"
+			target="busScanCodeFacade.scanCodeQueryRecommender" convertor="busScanCodeConvertor" />
+		<!-- 修改签约默认卡 -->
+		<front:in-transform funcodes="${mobilebank.busScanCode.scanCodeUpdateSignContract}"
+			target="busScanCodeFacade.scanCodeUpdateSignContract" convertor="busScanCodeConvertor" />
+		<!-- 天府支付付款码结束 -->
+		<front:in-transform funcodes="${mobilebank.account.attendance.attendanceInfo}"
+			target="attendanceFacade.attendanceInfo" convertor="attendanceConvertor" />
+		<front:in-transform funcodes="${mobilebank.account.attendance.signIn}"
+			target="attendanceFacade.signIn" convertor="attendanceConvertor" />
+		<!-- 考勤结束 -->
+		<!-- 熊猫金融互通 -->
+		<front:in-transform funcodes="${mobilebank.pandafinance.ebill.getToken}"
+			target="pfnEBillFacade.getEBillToken" convertor="eBillConvertor" />
+		<!-- 熊猫金融互通 结束 -->
+
+		<!-- 分享注册 -->
+		<front:in-transform funcodes="${mobilebank.shareRegister.login}"
+			target="sharePageFacade.loginSharePage" convertor="shareLoginConvertor" />
+		<front:in-transform funcodes="${mobilebank.shareRegister.firstSetPassword}"
+			target="sharePageFacade.firstSetPassword" convertor="setPwdConvertor" />
+		<front:in-transform funcodes="${mobilebank.shareRegister.getShareInfo}"
+			target="sharePageFacade.getShareInfo" convertor="shareRequestConvertor" />
+		<front:in-transform funcodes="${mobilebank.shareProduct.shareProductPageList}"
+			target="shareProductFacade.shareProductPageList" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.shareRegister.countShareInfo}"
+			target="sharePageFacade.countShareInfo" convertor="shareCountConvertor" />
+		<front:in-transform funcodes="${mobilebank.shareRegister.getCommonShareUrl}"
+			target="sharePageFacade.getCommonShareUrl" convertor="shareCountConvertor" />
+		<front:in-transform funcodes="${mobilebank.shareRegister.getShareCallBackInfo}"
+			target="sharePageFacade.getShareCallBackInfo" convertor="shareCallBackConvertor" />
+		<!-- 版本管理 -->
+		<front:in-transform funcodes="${mobilebank.user.queryVersionList}"
+			target="versionManageFacade.queryVersionList" convertor="versionManageConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.queryVersionHistoryList}"
+			target="versionManageFacade.queryVersionHistoryList" convertor="versionManageConvertor" />
+		<!-- 党费 -->
+		<front:in-transform funcodes="${mobilebank.midbus.paymentPartyMembership}"
+			target="partyMembershipFacade.paymentPartyMembership" convertor="paymentPartyMembershipConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.queryPartyMembershipHisInfo}"
+			target="partyMembershipFacade.queryPartyMembershipHisInfo" convertor="partyMembershipBaseConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.queryPartyMembershipInfo}"
+			target="partyMembershipFacade.queryPartyMembershipInfo" convertor="partyMembershipBaseConvertor" />
+		<!-- 人脸识别 -->
+		<front:in-transform funcodes="${mobilebank.account.liveness.tipMessage}"
+			target="livenessFacade.tipMessage" convertor="livenessRequestConvertor" />
+
+		<!-- 梦享家 -->
+		<front:in-transform funcodes="${mobilebank.homePlan.getInitPlanInfo}"
+			target="homePlanFacade.getInitPlanInfo" convertor="homePlanRequestConvertor" />
+
+		<front:in-transform funcodes="${mobilebank.homePlan.getInitLoanInfo}"
+			target="homePlanFacade.getInitLoanInfo" convertor="homePlanRequestConvertor" />
+		<front:in-transform funcodes="${mobilebank.homePlan.calculate}"
+			target="homePlanFacade.calculate" convertor="homePlanRequestConvertor" />
+
+		<front:in-transform funcodes="${mobilebank.homePlan.saveHomePlan}"
+			target="homePlanFacade.saveHomePlan" convertor="homePlanRequestConvertor" />
+
+		<front:in-transform funcodes="${mobilebank.homePlan.getHomePlan}"
+			target="homePlanFacade.getHomePlan" convertor="homePlanRequestConvertor" />
+
+		<!-- 用户等级 -->
+		<front:in-transform funcodes="${mobilebank.account.mobileSysUserGrade}"
+			target="userGrapeFacade.mobileSysUserGrade" convertor="baseInputMsgConvertor" />
+		<!-- 酷跑 -->
+		<front:in-transform funcodes="${mobilebank.midbus.run.friendEveryDayCounts}"
+			target="runFacade.friendEveryDayCounts" convertor="runConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.run.countDetail}"
+			target="runFacade.countDetail" convertor="runConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.run.noCountDay}"
+			target="runFacade.noCountDay" convertor="runConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.run.userCountList}"
+			target="runFacade.userCountList" convertor="runConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.run.weekList}"
+			target="runFacade.weekList" convertor="runConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.run.saveRunCount}"
+			target="runFacade.saveRunCount" convertor="runConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.run.concernUser}"
+			target="runFacade.concernUser" convertor="runConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.run.cancelConcernUser}"
+			target="runFacade.cancelConcernUser" convertor="runConvertor" />
+		<front:in-transform funcodes="${mobilebank.midbus.run.clickLike}"
+			target="runFacade.clickLike" convertor="runConvertor" />
+		<!-- 指纹支付 -->
+		<front:in-transform funcodes="${mobilebank.user.getPrintSetValue}"
+			target="fingerprintPayFacade.getPrintSetValue" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.setPrintSetValue}"
+			target="fingerprintPayFacade.setPrintSetValue" convertor="fingerprintPayConvertor" />
+		<!-- 查询用户是否设置指纹或手势登录 -->
+		<front:in-transform funcodes="${mobilebank.user.queryUserLoginSet}"
+			target="fingerprintPayFacade.queryUserSet" convertor="fingerprintPayConvertor" />
+		<!-- 获取可视化后管全量 -->
+		<front:in-transform
+			funcodes="${mobilebank.versionModuleLayout.getMobileLayout}" target="versionLayoutFacade.getMobileLayout"
+			convertor="versionModuleLayoutConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.versionModuleLayout.getMobileGrapLayout}"
+			target="versionLayoutFacade.getMobileGrapLayout" convertor="versionModuleLayoutConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.versionModuleLayout.checkModuleVersion}"
+			target="versionLayoutFacade.checkModuleVersion" convertor="versionModuleLayoutConvertor" />
+		<!-- 修改手机号 -->
+		<front:in-transform funcodes="${mobilebank.user.haveEBankTrsPassword}"
+			target="updateMobileFacade.haveEBankTrsPassword" convertor="baseInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.checkNewMobile}"
+			target="updateMobileFacade.checkNewMobile" convertor="updateMobileConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.validateUserPassword}"
+			target="updateMobileFacade.validateUserPassword" convertor="updateMobileConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.checkUpdateMobileVCode}"
+			target="updateMobileFacade.checkUpdateMobileVCode" convertor="updateMobileConvertor" />
+
+		<!-- 获取可视化后管最新版本oid -->
+		<front:in-transform funcodes="${mobilebank.versionModuleLayout.getNewVersion}"
+			target="versionLayoutFacade.getNewVersion" convertor="versionModuleLayoutConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.versionModuleLayout.getGrapNewVersion}"
+			target="versionLayoutFacade.getGrapNewVersion" convertor="versionModuleLayoutConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.createCryptKey}"
+			target="keyFacade.createCryptKey" convertor="cryptKeyConvertor" />
+		<!-- 获取可视化后管商城优惠券 -->	
+		<front:in-transform
+			funcodes="${mobilebank.versionModuleLayout.getAreaNewVersion}"
+			target="versionMobileLayoutFacade.getAreaNewVersion" convertor="versionModuleLayoutConvertor" />
+		<front:in-transform
+			funcodes="${mobilebank.versionModuleLayout.getEmallCouponNewVersion}"
+			target="versionMobileLayoutFacade.getEmallCouponNewVersion" convertor="versionModuleLayoutConvertor" />
+			
+		
+		<!-- 信贷产品接口 -->
+		<front:in-transform funcodes="${mobilebank.creditLoan.creditChange}"
+			target="creditLoanFacade.creditChange" convertor="creditProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditLoan.queryCouponList}"
+			target="creditLoanFacade.queryCouponList" convertor="creditProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditLoan.queryBranchInfo}"
+			target="creditLoanFacade.queryBranchInfo" convertor="creditProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditLoan.getCoupon}"
+			target="creditLoanFacade.getCoupon" convertor="creditProductConvertor" />
+		
+		<front:in-transform funcodes="${mobilebank.creditLoan.queryApplyResult}"
+			target="creditLoanFacade.queryApplyResult" convertor="creditProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditLoan.busiApply}"
+			target="creditLoanFacade.busiApply" convertor="useApplyConvertor" />
+		 <front:in-transform funcodes="${mobilebank.creditLoan.busiAccredit}"
+			target="creditLoanFacade.busiAccredit" convertor="creditProductConvertor" /> 
+		<front:in-transform funcodes="${mobilebank.creditLoan.getLoanRate}"
+			target="creditLoanFacade.getLoanRate" convertor="querySchedulesInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditLoan.queryTermUse}"
+			target="creditLoanFacade.queryTermUse" convertor="creditProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditLoan.creditApply}"
+			target="creditLoanFacade.creditApply" convertor="creditProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditLoan.repayCalculate}"
+			target="creditLoanFacade.repayCalculate" convertor="creditProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditLoan.earlyRepay}"
+			target="creditLoanFacade.earlyRepay" convertor="creditProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditLoan.repayPay}"
+			target="creditLoanFacade.repayPay" convertor="creditProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditLoan.eliteLoanApply}"
+			target="creditLoanFacade.eliteLoanApply" convertor="eliteLoanApplyConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditLoan.putOutApply}"
+			target="creditLoanFacade.putOutApply" convertor="putOutApplyInputMsgConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditLoan.pactQuery}"
+			target="creditLoanFacade.pactQuery" convertor="creditProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditLoan.queryAttributeCode}"
+			target="creditLoanFacade.queryAttributeCode" convertor="creditProductConvertor" />
+		<front:in-transform funcodes="${mobilebank.creditLoan.queryValidCity}"
+			target="creditLoanFacade.queryValidCity" convertor="creditProductConvertor" />
+
+		<!-- 资产报告 -->
+		<front:in-transform funcodes="${mobilebank.fund.tftg.monthlyReport}"
+			target="monthlyReportFacade.queryMonthlyReportHistory" convertor="monthlyReportConvertor" />
+
+		<front:in-transform funcodes="${mobilebank.fund.tftg.monthlyReportDetail}"
+			target="monthlyReportFacade.queryOneMonthlyReportDetail" convertor="monthlyReportDetailConvertor" />
+
+		<!-- 基金基本信息 -->
+		<front:in-transform funcodes="${mobilebank.fund.tftg.general}"
+			target="generalFacade.querygeneral" convertor="generalConvertor" />
+
+		<!-- 基金净值历史 -->
+		<front:in-transform funcodes="${mobilebank.fund.tftg.history}"
+			target="generalFacade.queryHistory" convertor="historyConvertor" />
+
+		<!-- 基金概况查询 -->
+		<front:in-transform funcodes="${mobilebank.fund.tftg.archives}"
+			target="generalFacade.queryArchives" convertor="generalConvertor" />
+
+		<!-- 基金交易信息查询 -->
+		<front:in-transform funcodes="${mobilebank.fund.tftg.trade}"
+			target="generalFacade.queryTrade" convertor="generalConvertor" />
+
+		<!-- 获取组合交易历史 -->
+		<front:in-transform funcodes="${mobilebank.fund.tftg.tradeHistory}"
+			target="tradeHistoryFacade.queryTradeHistoryPage" convertor="tradeHistoryConvertor" />
+
+		<!-- 获取单个组合的交易详情 -->
+		<front:in-transform funcodes="${mobilebank.fund.tftg.tradeHistorydetail}"
+			target="tradeHistoryFacade.queryTradeHistoryDetail" convertor="tradeHistoryConvertor" />
+		
+		<!-- 查询组合交易的銀行卡 -->
+		<front:in-transform funcodes="${mobilebank.fund.tftg.tradeHistoryCardNumber}"
+			target="tradeHistoryFacade.queryTradeHistoryCardNumber" convertor="tradeHistoryConvertor" />
+
+		<!-- 获取调仓历史 -->
+		<front:in-transform funcodes="${mobilebank.fund.tftg.tradeRebalance}"
+			target="tradeHistoryFacade.queryTradeRecommendPage" convertor="tradeHistoryConvertor" />
+
+		<!-- 获取调仓详细信息 -->
+		<front:in-transform funcodes="${mobilebank.fund.tftg.tradeRebalanceDetail}"
+			target="tradeHistoryFacade.queryTradeRecommendDetail" convertor="tradeHistoryConvertor" />
+
+		<!-- 用户持仓收益历史 -->
+		<front:in-transform funcodes="${mobilebank.fund.tftg.incomeHistory}"
+			target="tradeHistoryFacade.queryIncomeHistory" convertor="monthlyReportConvertor" />
+
+		<!-- 用户单品持仓明细（含历史交易记录） -->
+		<front:in-transform funcodes="${mobilebank.fund.tftg.positionTrade}"
+			target="tradeHistoryFacade.queryPositionTrade" convertor="monthlyReportConvertor" />
+
+		<!-- 安心宝购买组合详情查询 -->
+		<front:in-transform
+			funcodes="${mobilebank.anxinbao.anxinbaoCompositeDetailQuery}"
+			target="anxinbaoFacade.anxinbaoCompositeDetailQuery" convertor="anxinbaoConvertor" />
+
+		<!-- 组合历史收益查询 -->
+		<front:in-transform
+			funcodes="${mobilebank.anxinbao.anxinbaoHistoryProfitQuery}" target="anxinbaoFacade.anxinbaoHistoryProfitQuery"
+			convertor="anxinbaoConvertor" />
+
+		<!-- 客户上一工作日收益查询 -->
+		<front:in-transform funcodes="${mobilebank.anxinbao.anxinbaoLastDayIncome}"
+			target="anxinbaoFacade.anxinbaoLastDayIncome" convertor="anxinbaoConvertor" />
+
+		<!-- 客户持有资产类型比例信息查询 -->
+		<front:in-transform funcodes="${mobilebank.anxinbao.anxinbaoCustomerEquity}"
+			target="anxinbaoFacade.anxinbaoCustomerEquity" convertor="anxinbaoConvertor" />
+
+		<!-- 组合购买 -->
+		<front:in-transform funcodes="${mobilebank.anxinbao.anxinbaoBuy}"
+			target="anxinbaoFacade.anxinbaoBuy" convertor="anxinbaoBuyConvertor" />
+
+		<!-- 组合赎回 -->
+		<front:in-transform funcodes="${mobilebank.anxinbao.anxinbaoDraw}"
+			target="anxinbaoFacade.anxinbaoDraw" convertor="anxinbaoDrawConvertor" />
+		
+		<!-- 客户交易流水查询-->
+		<front:in-transform funcodes="${mobilebank.anxinbao.anxinbaoTransDetailQuery}"
+			target="anxinbaoFacade.anxinbaoTransDetailQuery" convertor="anxinbaoConvertor" />
+		
+		<!-- 安心宝首页展示-->
+		<front:in-transform funcodes="${mobilebank.anxinbao.anxinbaoIndexPage}"
+			target="anxinbaoFacade.anxinbaoIndexPage" convertor="anxinbaoConvertor" />
+		
+		<!-- 安心宝详情页展示-->
+		<front:in-transform funcodes="${mobilebank.anxinbao.anxinbaoProductDetailPage}"
+			target="anxinbaoFacade.anxinbaoProductDetailPage" convertor="anxinbaoConvertor" />
+		
+		
+		<!-- 查询基金是否签约 -->
+		<front:in-transform funcodes="${mobilebank.anxinbao.queryfund}"
+			target="anxinbaoFacade.queryfund" convertor="anxinbaoBuyConvertor" />
+		
+		<!-- 基金签约 -->
+		<front:in-transform funcodes="${mobilebank.anxinbao.fund}"
+			target="anxinbaoFacade.fund" convertor="fundSignConvertor" />
+
+		<!-- 查询用户信息 -->
+		<front:in-transform funcodes="${mobilebank.anxinbao.anxinbaoQueryUserInfo}"
+			target="anxinbaoFacade.anxinbaoQueryUserInfo" convertor="fundSignConvertor" />
+
+		<!-- 查询推客信息 -->
+		<front:in-transform funcodes="${mobilebank.operation.getTwitterInfo}"
+			target="twitterFacade.getTwitterInfo" convertor="twitterConvertor" />
+		<!-- 查询推客广告位 -->
+		<front:in-transform funcodes="${mobilebank.operation.getMobileAdsenseInfo}"
+			target="mobileAdsenseFacade.getMobileAdsenseInfo" convertor="adsenseConvertor" />
+		
+		<!-- 新注册 -->
+		<front:in-transform funcodes="${mobilebank.user.new.register}"
+			target="registerNewFacade.register" convertor="registerConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.new.checkUserForReg}"
+			target="registerNewFacade.checkUserInfo" convertor="checkUserInfoConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.new.reCheckUserInfo}"
+			target="registerNewFacade.reCheckUserInfo" convertor="checkUserInfoConvertor" />
+		<!-- 重置密码 -->
+		<front:in-transform funcodes="${mobilebank.user.new.checkUserInfo}"
+			target="updatePwdNewFacade.checkUserInfo" convertor="updatePwdConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.new.resetPassword}"
+			target="updatePwdNewFacade.resetPassword" convertor="updatePwdConvertor" />
+		
+		<!-- 丢失手机号 -->
+		<front:in-transform funcodes="${mobilebank.user.new.checkOtherCardInfo}"
+			target="updateMobileNewFacade.checkOtherCardInfo" convertor="updateMobileConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.new.checkSelfCardInfo}"
+			target="updateMobileNewFacade.checkSelfCardInfo" convertor="updateMobileConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.new.checkCardNoType}"
+			target="updateMobileNewFacade.checkCardNoType" convertor="updateMobileConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.new.updatePhone}"
+			target="updateMobileNewFacade.updatePhoneNew" convertor="updateMobileConvertor" />
+		
+		<front:in-transform funcodes="${mobilebank.user.new.checkBankPwd}"
+			target="updatePwdNewFacade.checkBankPwd" convertor="payPwdConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.new.checkFace}"
+			target="updatePwdNewFacade.checkFaceNew" convertor="updatePwdConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.new.checkBankPhone}"
+			target="updatePwdNewFacade.checkBankPhone" convertor="checkBankPhoneConvertor" />
+		<!-- 重置支付密码 -->
+		<front:in-transform funcodes="${mobilebank.user.new.checkUserInfoForPayPwd}"
+			target="updatePayPwdFacade.checkUserInfo" convertor="checkUserInfoConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.new.checkBankPhoneForPayPwd}"
+			target="updatePayPwdFacade.checkBankPhone" convertor="checkBankPhoneConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.new.resetPayPassword}"
+			target="updatePayPwdFacade.resetPayPassword" convertor="payPwdConvertor" />
+		<!-- 结构性存款 -->
+		<front:in-transform funcodes="${mobilebank.structureddeposit.listProject}"
+			target="structuredDepositFacade.listStructuredDepositProject" convertor="structuredDepositQueryConvertor" />
+		<front:in-transform funcodes="${mobilebank.structureddeposit.queryProject}"
+			target="structuredDepositFacade.queryStructuredDepositProject" convertor="structuredDepositQueryConvertor" />
+		<front:in-transform funcodes="${mobilebank.structureddeposit.listOrder}"
+			target="structuredDepositFacade.listStructuredDepositOrder" convertor="structuredDepositQueryConvertor" />
+		<front:in-transform funcodes="${mobilebank.structureddeposit.queryOrder}"
+			target="structuredDepositFacade.queryStructuredDepositOrder" convertor="structuredDepositQueryConvertor" />
+		<front:in-transform funcodes="${mobilebank.structureddeposit.createOrder}"
+			target="structuredDepositFacade.createStructuredDepositOrder" convertor="structuredDepositTradeConvertor" />
+		<front:in-transform funcodes="${mobilebank.structureddeposit.killOrder}"
+			target="structuredDepositFacade.killStructuredDepositOrder" convertor="structuredDepositTradeConvertor" />
+		<front:in-transform funcodes="${mobilebank.structureddeposit.queryQualification}"
+			target="structuredDepositFacade.queryStructuredDepositQualification" convertor="baseInputMsgConvertor" />
+		<!-- 结构性存款 结束 -->
+		<!-- 大额存单 -->
+		<front:in-transform funcodes="${mobilebank.certificatedeposits.list}"
+			target="certificateDepositsFacade.listCertificateDepositsProducts" convertor="certificateDepositsQueryConvertor" />
+		<front:in-transform funcodes="${mobilebank.certificatedeposits.buy}"
+			target="certificateDepositsFacade.buyCertificateDeposits" convertor="certificateDepositsTransConvertor" />
+		<front:in-transform funcodes="${mobilebank.certificatedeposits.withdraw}"
+			target="certificateDepositsFacade.withdrawCertificateDeposits" convertor="certificateDepositsTransConvertor" />
+		<front:in-transform funcodes="${mobilebank.certificatedeposits.holding}"
+			target="certificateDepositsFacade.listCertificateDepositsHoldings" convertor="certificateDepositsQueryConvertor" />
+		<!-- 大额存单 结束 -->
+		
+		<!-- paysdk开始 -->
+		
+		<!-- 第三方H5应用预下单-->
+		 <front:in-transform funcodes="${paysdk.order.create}"
+            target="paysdkFacade.orderCreate" convertor="paysdkBusinessPaymentInfoConvertor" />
+		 <!-- 第三方H5应用预下单支付-->
+        <front:in-transform funcodes="${paysdk.order.pay}"
+            target="paysdkFacade.orderPay" convertor="paysdkTransferPaymentInputMsgConvertor" />
+         <!-- 第三方H5应用订单查询-->
+        <front:in-transform funcodes="${paysdk.order.queryOrderStatus}"
+            target="paysdkMidBizFacade.queryOrderStatus" convertor="paysdkRequestConvertor" />
+        <!-- 原生订单查询-->
+        <front:in-transform funcodes="${paysdk.native.order.query}"
+            target="paysdkNativeFacade.orderQuery" convertor="paysdkRequestConvertor" />
+         <!-- 原生订单查询-->
+        <front:in-transform funcodes="${paysdk.native.order.localOrderQuery}"
+            target="paysdkNativeFacade.localOrderQuery" convertor="paysdkRequestConvertor" />
+        <!-- 查询卡列表-->
+        <front:in-transform funcodes="${paysdk.order.getPaysdkAllPaymentCards}"
+            target="paysdkPaymentFacade.getPaysdkAllPaymentCards" convertor="getPaymentCardsRequestConvertor" />
+        <!-- 小额免密-->
+        <front:in-transform funcodes="${paysdk.order.confirmTransferData}"
+            target="iValidateFacade.confirmTransferData" convertor="paysdkTransferPaymentInputMsgConvertor" />
+        <!-- 发送验证码-->
+        <front:in-transform funcodes="${paysdk.order.sendShortMessage}"
+            target="iValidateFacade.sendShortMessage" convertor="paysdkRequestConvertor" />
+        <!-- 验证验证码-->
+        <front:in-transform funcodes="${paysdk.order.checkAuthCode}"
+            target="iValidateFacade.checkAuthCode" convertor="paysdkRequestConvertor" />
+          <!-- 安全平台调用-->
+        <front:in-transform funcodes="${paysdk.order.safeUserInfo}"
+            target="paysdkFacade.safeUserInfo" convertor="paysdkRequestConvertor" />
+        
+        <!-- 一键付中间业务下单 -->
+        <front:in-transform funcodes="${paysdk.order.oneKeyPay.mid.create}"
+            target="paysdkOneKeyPayFacade.addMidOneKeyPayOrder" convertor="paySdkTuitionPaymentConvertor" />
+        
+        <!-- 一键付三方业务下单 -->
+        <front:in-transform funcodes="${paysdk.order.oneKeyPay.other.create}"
+            target="paysdkOneKeyPayFacade.addOtherOneKeyPayOrder" convertor="paysdkBusinessPaymentInfoConvertor" />
+        
+        <!-- 一键付查询订单 -->
+        <front:in-transform funcodes="${paysdk.order.oneKeyPay.queryOrder}"
+            target="paysdkOneKeyPayFacade.queryOneKeyPayOrder" convertor="paysdkBusinessPaymentInfoConvertor" />
+        
+        <!-- 一键付删除订单 -->
+        <front:in-transform funcodes="${paysdk.order.oneKeyPay.deleteOrder}"
+            target="paysdkOneKeyPayFacade.deleteOneKeyPayOrder" convertor="paysdkBusinessPaymentInfoConvertor" />
+        
+        <!-- 一键付查询订单List -->
+        <front:in-transform funcodes="${paysdk.order.oneKeyPay.queryOrderList}"
+            target="paysdkOneKeyPayFacade.queryListOneKeyPayOrder" convertor="paysdkBusinessPaymentInfoConvertor" />
+        
+        <!-- 一键付支付 -->
+        <front:in-transform funcodes="${paysdk.order.oneKeyPay.payment}"
+            target="paysdkOneKeyPayFacade.paymentOneKeyPayOrder" convertor="paysdkBusinessPaymentInfoConvertor" />
+        
+        <!-- 一键付查询支付结果 -->
+        <front:in-transform funcodes="${paysdk.order.oneKeyPay.queryOrderStatus}"
+            target="paysdkOneKeyPayFacade.queryOrderStatus" convertor="paysdkBusinessPaymentInfoConvertor" />
+        
+        <!-- 一键付查询历史记录 -->
+        <front:in-transform funcodes="${paysdk.order.oneKeyPay.paymentedListOrder}"
+            target="paysdkOneKeyPayFacade.paymentedListOrder" convertor="paysdkBusinessPaymentInfoConvertor" />
+        
+        <!-- 一键付查询订单数量 -->
+        <front:in-transform funcodes="${paysdk.order.oneKeyPay.queryOrderCount}"
+            target="paysdkOneKeyPayFacade.queryOrderCount" convertor="paysdkBusinessPaymentInfoConvertor" />
+        
+        
+        
+        
+        
+          <!-- 他行卡加挂-->
+        <front:in-transform funcodes="${mobilebank.account.getOtherCard}"
+            target="otherCardFacade.getOtherCard" convertor="otherCardConvertor" />
+        <front:in-transform funcodes="${mobilebank.account.getOtherCardList}"
+            target="otherCardFacade.getOtherCardList" convertor="otherCardConvertor" />
+        <front:in-transform funcodes="${mobilebank.account.addOtherCard}"
+            target="otherCardFacade.addOtherCard" convertor="otherCardConvertor" />
+        <front:in-transform funcodes="${mobilebank.account.deleteOtherCard}"
+            target="otherCardFacade.deleteOtherCard" convertor="otherCardConvertor" />
+        <front:in-transform funcodes="${mobilebank.account.changeOtherCard}"
+            target="otherCardFacade.changeOtherCard" convertor="otherCardConvertor" />
+        <front:in-transform funcodes="${mobilebank.account.checkAcType}"
+            target="otherCardFacade.checkAcType" convertor="otherCardConvertor" />
+        <!-- 远程开二类户 -->
+		<front:in-transform funcodes="${mobilebank.account.addOpenCard}"
+			target="opencardFacade.addOpenCard" convertor="opencardConvertor" />
+        <front:in-transform funcodes="${mobilebank.account.uploadIdCardForOpenCard}"
+			target="opencardFacade.uploadIdCardForOpenCard" convertor="uploadIDCardConvertor" />
+        <front:in-transform funcodes="${mobilebank.account.checkRemainPhoneForOpenCard}"
+			target="opencardFacade.checkRemainPhoneForOpenCard" convertor="opencardConvertor" />
+        <front:in-transform funcodes="${mobilebank.account.checkBankPwdForOpenCard}"
+			target="opencardFacade.checkBankPwdForOpenCard" convertor="opencardConvertor" />
+        <front:in-transform funcodes="${mobilebank.account.checkOpenCardFlag}"
+			target="opencardFacade.checkOpenCardFlag" convertor="opencardConvertor" />
+        <front:in-transform funcodes="${mobilebank.account.marketCard}"
+			target="opencardFacade.marketCard" convertor="opencardConvertor" />
+         <front:in-transform funcodes="${mobilebank.account.getBranchList}"
+			target="opencardFacade.getBranchList" convertor="opencardConvertor" />
+		
+		<!-- 消息免打扰设置 -->
+		<front:in-transform funcodes="${mobilebank.user.changeShutStatus}"
+			target="shutMessageFacade.changeShutStatus" convertor="shutMessageConvertor" />
+		<front:in-transform funcodes="${mobilebank.user.getShutStatus}"
+			target="shutMessageFacade.getShutStatus" convertor="shutMessageConvertor" />		
+		<!-- 报错统计 -->
+		<front:in-transform funcodes="${mobilebank.account.countErrorList}"
+			target="saveErrorListFacade.countErrorList" convertor="saveErrorListConvertor" />
+	</front:out-service>
+
+	<!-- 信贷产品接口  -->
+	<front:in-reference id="creditLoanFacade"
+		interface="com.cgnb.mobile.api.loan.creditLoan.CreditLoanFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+	<!-- 交警罚没 -->
+	<front:in-reference id="violationFacade"
+		interface="com.cgnb.mobile.api.violation.ViolationFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+	<!-- 个人定期 -->
+	<front:in-reference id="myRegularFacade"
+		interface="com.cgnb.mobile.api.regular.MyRegularFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 系统红包 -->
+	<front:in-reference id="userRedEnvelFacade"
+		interface="com.cgnb.mobile.api.redenvel.UserRedEnvelFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 个人资产 -->
+	<front:in-reference id="myAssetsFacade"
+		interface="com.cgnb.mobile.api.myassets.MyAssetsFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 会话秘钥交换 -->
+	<front:in-reference id="securityFacade"
+		interface="cn.cgnb.api.security.SecurityFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 加挂他行卡 -->
+	<front:in-reference id="addotherbankcardFacade"
+		interface="com.cgnb.mobile.api.addotherbankcard.AddOtherBankCardFacade"
+		registry="${dubbo.cgnb.registry}" version="${dubbo.service.version}"
+		group="${dubbo.mobilebank.group}" timeout="30000" retries="0"
+		check="${dubbo.consumer.check}" />
+	<!-- 检查更新 -->
+	<front:in-reference id="checkUpdateFacade"
+		interface="com.cgnb.mobile.api.checkupdate.CheckUpdateFacade"
+		registry="${dubbo.cgnb.registry}" version="${dubbo.service.version}"
+		group="${dubbo.mobilebank.group}" timeout="30000" retries="0"
+		check="${dubbo.consumer.check}" />
+	<!-- 南充市商业银行卡卡业务相关 -->
+	<front:in-reference id="bankCardFacade"
+		interface="com.cgnb.mobile.api.bankcard.BankCardFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 我的理财 -->
+	<front:in-reference id="financeProductFacade"
+		interface="com.cgnb.mobile.api.investment.FinanceProductFacade"
+		registry="${dubbo.cgnb.registry}" version="${dubbo.service.version}"
+		group="${dubbo.mobilebank.group}" timeout="30000" retries="0"
+		check="${dubbo.consumer.check}" />
+
+	<!-- 广告模块 -->
+	<front:in-reference id="advertFacade"
+		interface="cn.cgnb.api.user.AdvertFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+	<!-- 指纹支付 -->
+	<front:in-reference id="fingerprintPayFacade"
+		interface="cn.cgnb.api.user.FingerprintPayFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+	<!-- 登陆检查 -->
+	<front:in-reference id="updatePwdFacade"
+		interface="cn.cgnb.api.user.UpdatePwdFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+	<!-- 文字广告配置 -->
+	<front:in-reference id="moduleFacade"
+		interface="cn.cgnb.api.user.ModuleFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+	<!-- 理财资讯 -->
+	<front:in-reference id="financialInformationFacade"
+		interface="com.cgnb.mobile.api.information.FinancialInformationFacade"
+		registry="${dubbo.cgnb.registry}" version="${dubbo.service.version}"
+		group="${dubbo.mobilebank.group}" timeout="30000" retries="0"
+		check="${dubbo.consumer.check}" />
+
+	<!-- 中间业务，房管 -->
+	<front:in-reference id="houseInfoFacade"
+		interface="com.cgnb.mobile.api.midsub.houseinfo.HouseInfoFacade"
+		registry="${dubbo.cgnb.registry}" version="${dubbo.service.version}"
+		group="${dubbo.mobilebank.group}" timeout="30000" retries="0"
+		check="${dubbo.consumer.check}" />
+	<!-- 中间业务，薪酬 -->
+	<front:in-reference id="salaryFacade"
+		interface="com.cgnb.mobile.api.midsub.salary.SalaryFacade"
+		registry="${dubbo.cgnb.registry}" version="${dubbo.service.version}"
+		group="${dubbo.mobilebank.group}" timeout="30000" retries="0"
+		check="${dubbo.consumer.check}" />
+	<!-- 中间业务，新农合医保缴费 -->
+	<front:in-reference id="xnhFacade"
+		interface="com.cgnb.mobile.api.midsub.xnh.XNHFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 中间业务，酒店管理 -->
+	<front:in-reference id="hotelFacade"
+		interface="com.cgnb.mobile.api.hotel.HotelFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 中间业务，景点门票管理 -->
+	<front:in-reference id="sceneTicketFacade"
+		interface="com.cgnb.mobile.api.sceneTicket.SceneTicketFacade"
+		registry="${dubbo.cgnb.registry}" version="${dubbo.service.version}"
+		group="${dubbo.mobilebank.group}" timeout="30000" retries="0"
+		check="${dubbo.consumer.check}" />
+	<!-- 中间业务，生活缴费 -->
+	<front:in-reference id="lifePaymentFacade"
+		interface="com.cgnb.mobile.api.midsub.lifepayment.LifePaymentFacade"
+		registry="${dubbo.cgnb.registry}" version="${dubbo.service.version}"
+		group="${dubbo.mobilebank.group}" timeout="30000" retries="0"
+		check="${dubbo.consumer.check}" />
+	<!-- 中间业务，手机充值 -->
+	<front:in-reference id="mobileRechargeFacade"
+		interface="com.cgnb.mobile.api.midsub.mobilerecharge.MobileRechargeFacade"
+		registry="${dubbo.cgnb.registry}" version="${dubbo.service.version}"
+		group="${dubbo.mobilebank.group}" timeout="30000" retries="0"
+		check="${dubbo.consumer.check}" />
+	<!-- 中间业务，社保缴费 -->
+	<front:in-reference id="socialSecurityFacade"
+		interface="com.cgnb.mobile.api.midsub.socialsecurity.SocialSecurityFacade"
+		registry="${dubbo.cgnb.registry}" version="${dubbo.service.version}"
+		group="${dubbo.mobilebank.group}" timeout="30000" retries="0"
+		check="${dubbo.consumer.check}" />
+
+	<!-- 中间业务，社保2017 -->
+	<front:in-reference id="socso2017Facade"
+		interface="com.cgnb.mobile.api.midsub.socso2017.SOCSOFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 中间业务，长途车票 -->
+	<front:in-reference id="busTicketFacade"
+		interface="com.cgnb.mobile.api.midsub.busticket.BusTicketFacade"
+		registry="${dubbo.cgnb.registry}" version="${dubbo.service.version}"
+		group="${dubbo.mobilebank.group}" timeout="30000" retries="0"
+		check="${dubbo.consumer.check}" />
+	<!-- 智能转账，跨行转账 -->
+	<front:in-reference id="crossTransferFacade"
+		interface="com.cgnb.mobile.api.transfer.cross.CrossTransferFacade"
+		registry="${dubbo.cgnb.registry}" version="${dubbo.service.version}"
+		group="${dubbo.mobilebank.group}" timeout="30000" retries="0"
+		check="${dubbo.consumer.check}" />
+	<!-- 智能转账，行内转账 -->
+	<front:in-reference id="innerTransferFacade"
+		interface="com.cgnb.mobile.api.transfer.inner.InnerTransferFacade"
+		registry="${dubbo.cgnb.registry}" version="${dubbo.service.version}"
+		group="${dubbo.mobilebank.group}" timeout="30000" retries="0"
+		check="${dubbo.consumer.check}" />
+	<!-- 智能转账，转账计划 -->
+	<front:in-reference id="transferPlanFacade"
+		interface="com.cgnb.mobile.api.transfer.plan.TransferPlanFacade"
+		registry="${dubbo.cgnb.registry}" version="${dubbo.service.version}"
+		group="${dubbo.mobilebank.group}" timeout="30000" retries="0"
+		check="${dubbo.consumer.check}" />
+	<!-- 登录 -->
+	<front:in-reference id="loginFacade"
+		interface="cn.cgnb.api.user.LoginFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 启动请求 -->
+	<front:in-reference id="startFacade"
+		interface="cn.cgnb.api.user.StartFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 注册 -->
+	<front:in-reference id="registerFacade"
+		interface="cn.cgnb.api.user.RegisterFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 小额免密设置 -->
+	<front:in-reference id="payLimitFacade"
+		interface="cn.cgnb.api.user.PayLimitFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 删除用户 -->
+	<front:in-reference id="deleteUserFacade"
+		interface="com.cgnb.mobile.api.user.delete.DeleteUserFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 远程开户 -->
+	<front:in-reference id="opencardFacade"
+		interface="com.cgnb.mobile.api.opencard.OpencardFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 贵金属 -->
+	<front:in-reference id="mtlFacade"
+		interface="com.cgnb.mobile.api.mtl.MTLFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 用户信息 -->
+	<front:in-reference id="updateUserFacade"
+		interface="cn.cgnb.api.user.UpdateUserFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+
+
+	<!-- 用户登录历史信息相关查询 -->
+	<!-- <front:in-reference id="historyInfoFacade" interface="cn.cgnb.api.user.HistoryInfoFacade" 
+		registry="${dubbo.cgnb.registry}" version="${dubbo.service.version}" group="${dubbo.mobilebank.group}" 
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" /> -->
+
+
+	<!-- 问题 -->
+	<front:in-reference id="answerFacade"
+		interface="cn.cgnb.api.user.AnswerFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+	<!-- 历史设备登陆信息 -->
+	<front:in-reference id="historyDeviceFacade"
+		interface="cn.cgnb.api.user.HistoryDeviceFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+	<!-- 抽奖 -->
+	<front:in-reference id="luckDrawFacade"
+		interface="cn.cgnb.api.user.LuckDrawFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 实名认证 -->
+	<front:in-reference id="realNameCertificationFacade"
+		interface="com.cgnb.mobile.api.real.name.certification.RealNameCertificationFacade"
+		registry="${dubbo.cgnb.registry}" version="${dubbo.service.version}"
+		group="${dubbo.mobilebank.group}" timeout="30000" retries="0"
+		check="${dubbo.consumer.check}" />
+
+	<!-- 统一支付 -->
+	<!-- <front:in-reference id="transPaymentFacade" -->
+	<!-- interface="com.cgnb.mobile.api.pay.TransferPaymentFacade" registry="${dubbo.cgnb.registry}" -->
+	<!-- version="${dubbo.service.version}" group="${dubbo.mobilebank.group}" -->
+	<!-- timeout="30000" retries="0" check="${dubbo.consumer.check}" /> -->
+
+	<!-- 统一支付 -->
+	<front:in-reference id="paymentFacade"
+		interface="com.cgnb.mobile.api.payment.PaymentFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 预留手机号查询 -->
+	<front:in-reference id="bankCardPhoneFacade"
+		interface="com.cgnb.mobile.api.bankCardPhone.BankCardPhoneFacade"
+		registry="${dubbo.cgnb.registry}" version="${dubbo.service.version}"
+		group="${dubbo.mobilebank.group}" timeout="30000" retries="0"
+		check="${dubbo.consumer.check}" />
+	<!-- 安心锁设置 -->
+	<front:in-reference id="secureLockActFacade"
+		interface="com.cgnb.mobile.api.secureLockAct.SecureLockActFacade"
+		registry="${dubbo.cgnb.registry}" version="${dubbo.service.version}"
+		group="${dubbo.mobilebank.group}" timeout="30000" retries="0"
+		check="${dubbo.consumer.check}" />
+	<!-- 熊猫钱包 -->
+	<front:in-reference id="walletAccountFacade"
+		interface="com.cgnb.mobile.api.wallet.WalletAccountFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- hce -->
+	<front:in-reference id="hceFacade"
+		interface="com.cgnb.mobile.api.hce.HCEFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+	<front:in-reference id="cAFacade"
+		interface="com.cgnb.mobile.api.ca.CAFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 抽奖机会判断 -->
+	<front:in-reference id="drawFacade" interface="cn.cgnb.api.user.DrawFacade"
+		registry="${dubbo.cgnb.registry}" version="${dubbo.service.version}"
+		group="${dubbo.mobilebank.group}" timeout="30000" retries="0"
+		check="${dubbo.consumer.check}" />
+
+	<!-- 荐者有礼活动 -->
+	<front:in-reference id="activityFacade"
+		interface="com.cgnb.mobile.api.activity.ActivityFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+	<!-- 获奖记录 -->
+	<front:in-reference id="awardFacade"
+		interface="com.cgnb.mobile.api.award.AwardFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+	<!-- 三方获取交叉认证token -->
+	<front:in-reference id="cCGetCVKeyFacade"
+		interface="com.cgnb.mobile.api.cc.CCGetCVKeyFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 校验三方系统交叉认证token -->
+	<front:in-reference id="crossValidationFacade"
+		interface="com.cgnb.mobile.api.cc.CrossValidationFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+
+	<!-- SM2解密 -->
+	<front:in-reference id="cCGetRanDomByIdFacade"
+		interface="com.cgnb.mobile.api.cc.CCGetRanDomByIdFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+	<!-- 基金 -->
+	<front:in-reference id="fundRiskGradeFacade"
+		interface="com.cgnb.mobile.api.fund.FundRiskGradeFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<front:in-reference id="fundGeneralFacade"
+		interface="com.cgnb.mobile.api.fund.GeneralFundFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<front:in-reference id="fundBulletinFacade"
+		interface="com.cgnb.mobile.api.fund.FundBulletinFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<front:in-reference id="fundFavFacade"
+		interface="com.cgnb.mobile.api.fund.FundFavFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 基金 结束 -->
+
+	<!-- 基金,润金宝 -->
+	<front:in-reference id="fundRunJinFacade"
+		interface="com.cgnb.mobile.api.fund.RunJinFundFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 基金,润金宝 结束 -->
+
+	<!-- 基金,熊猫宝 -->
+	<front:in-reference id="fundPandaFacade"
+		interface="com.cgnb.mobile.api.fund.PandaFundFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 基金,熊猫宝结束 -->
+
+	<!-- 基金,汇金卡 -->
+	<front:in-reference id="fundHJCardFacade"
+		interface="com.cgnb.mobile.api.fund.HJCardFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 基金,汇金卡结束 -->
+
+	<!-- 基金,天府投顾 -->
+	<front:in-reference id="fundTFTGAllocationFacade"
+		interface="com.cgnb.mobile.api.fund.tftg.TFTGAllocationFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<front:in-reference id="fundTFTGPositionFacade"
+		interface="com.cgnb.mobile.api.fund.tftg.TFTGPositionFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<front:in-reference id="fundTFTGTradeFacade"
+		interface="com.cgnb.mobile.api.fund.tftg.TFTGTradeFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<front:in-reference id="fundTFTGMsgFacade"
+		interface="com.cgnb.mobile.api.fund.tftg.TFTGMsgFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 基金,天府投顾结束 -->
+
+	<!-- 易贷 -->
+	<front:in-reference id="easyLoanFacade"
+		interface="com.cgnb.mobile.api.loan.easyLoan.EasyLoanFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+	<!-- 精英贷 -->
+	<front:in-reference id="eliteLoanFacade"
+		interface="com.cgnb.mobile.api.loan.eliteLoan.EliteLoanFacade"
+		registry="${dubbo.cgnb.registry}" version="${dubbo.service.version}"
+		group="${dubbo.mobilebank.group}" timeout="30000" retries="0"
+		check="${dubbo.consumer.check}" />
+
+	<!-- 个人贷款 -->
+	<front:in-reference id="mycredit"
+		interface="com.cgnb.mobile.api.loan.mycredit.MycreditFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<front:in-reference id="subscribeRepay"
+		interface="com.cgnb.mobile.api.loan.mycredit.SubscribeRepayFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+	<!-- 贷款归还 -->
+	<front:in-reference id="loanFacade"
+		interface="com.cgnb.mobile.api.loan.common.LoanFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 开发配置 end -->
+
+	<!-- 考勤 -->
+	<front:in-reference id="attendanceFacade"
+		interface="com.cgnb.mobile.api.attendace.AttendanceFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 考勤结束 -->
+	
+	
+	
+	<!-- 可视化2.0 -->
+		<front:in-reference id="activityFacade2"
+		interface="com.cgnb.mobile.api.operation.ActivityFacade2" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+		
+		<front:in-reference id="activityScoreFacade"
+		interface="com.cgnb.mobile.api.activity.ActivityScoreFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 可视化2.0 -->	
+
+	<!-- 短信配置开始 -->
+	<front:in-reference id="verificationCodeFacade"
+		interface="com.cgnb.mobile.api.verificationCode.VerificationCodeFacade"
+		registry="${dubbo.cgnb.registry}" version="${dubbo.service.version}"
+		group="${dubbo.mobilebank.group}" timeout="30000" retries="0"
+		check="${dubbo.consumer.check}" />
+	<!-- 短信配置结束 -->
+
+	<!-- 推荐人配置开始 -->
+	<front:in-reference id="spreadUserFacade"
+		interface="com.cgnb.mobile.api.user.spread.SpreadUserFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 推荐人配置结束 -->
+
+	<!-- 信用卡 -->
+	<front:in-reference id="creditCardFacade"
+		interface="com.cgnb.mobile.api.creditcard.CreditCardFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 信用卡结束 -->
+	
+	<!-- 学费 -->
+	<front:in-reference id="tuitionFacade"
+		interface="com.cgnb.mobile.api.midsub.tuition.TuitionFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 学费结束 -->
+
+	<!-- 签到 -->
+	<front:in-reference id="userSignFacade"
+		interface="com.cgnb.mobile.api.activity.UserSignFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 签到结束 -->
+
+	<!-- 积分 -->
+	<front:in-reference id="scoreFacade"
+		interface="com.cgnb.mobile.api.activity.ScoreFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 积分结束 -->
+
+	<!-- 银联二维码 -->
+	<front:in-reference id="quickmarkFacade"
+		interface="com.cgnb.mobile.api.quickmark.QuickmarkFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+	<!-- 熊猫金融互通 -->
+	<front:in-reference id="pfnEBillFacade"
+		interface="com.cgnb.mobile.api.pandafinance.EBillFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="false" />
+	<!-- 熊猫金融互通结束 -->
+
+	<!-- 分享注册 -->
+	<front:in-reference id="sharePageFacade"
+		interface="com.cgnb.mobile.api.share.SharePageFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="false" />
+
+	<front:in-reference id="shareProductFacade"
+		interface="com.cgnb.mobile.api.share.ShareProductFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="false" />
+
+	<!-- 党费 -->
+	<front:in-reference id="partyMembershipFacade"
+		interface="com.cgnb.mobile.api.midsub.partymembership.PartyMembershipFacade"
+		registry="${dubbo.cgnb.registry}" version="${dubbo.service.version}"
+		group="${dubbo.mobilebank.group}" timeout="30000" retries="0"
+		check="${dubbo.consumer.check}" />
+	<!-- 党费结束 -->
+	<!-- 人脸识别 -->
+	<front:in-reference id="livenessFacade"
+		interface="com.cgnb.mobile.api.liveness.LivenessFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+	<!-- 梦享家 -->
+	<front:in-reference id="homePlanFacade"
+		interface="com.cgnb.mobile.api.homePlan.HomePlanFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 用户等级 -->
+	<front:in-reference id="userGrapeFacade"
+		interface="com.cgnb.mobile.api.user.grade.UserGrapeFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+	<!-- 酷跑 -->
+	<front:in-reference id="runFacade"
+		interface="com.cgnb.mobile.api.midsub.run.RunFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+	<!-- 获取可视化后管全量 -->
+	<front:in-reference id="versionLayoutFacade"
+		interface="cn.cgnb.api.user.VersionLayoutFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+		<!-- 获取可视化商城 -->
+	<front:in-reference id="versionMobileLayoutFacade"
+		interface="com.cgnb.mobile.api.operation.VersionMobileLayoutFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />	
+		
+	<!-- 修改手机号 -->
+	<front:in-reference id="updateMobileFacade"
+		interface="cn.cgnb.api.user.UpdateMobileFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 生成密钥 -->
+	<front:in-reference id="keyFacade"
+		interface="com.cgnb.mobile.api.key.KeyFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+	<!-- 查询月度资产报告历史 -->
+	<front:in-reference id="monthlyReportFacade"
+		interface="com.cgnb.mobile.api.fund.tftg.MonthlyReportFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+	<!-- 基金基本信息 -->
+	<front:in-reference id="generalFacade"
+		interface="com.cgnb.mobile.api.fund.tftg.GeneralFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+	<!-- 组合交易历史相关 -->
+	<front:in-reference id="tradeHistoryFacade"
+		interface="com.cgnb.mobile.api.fund.tftg.TradeHistoryFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+	<!-- 安心宝相关 -->
+	<front:in-reference id="anxinbaoFacade"
+		interface="com.cgnb.mobile.api.anxinbao.ANXINBAOFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	
+	<!-- 版本管理 -->
+	<front:in-reference id="versionManageFacade"
+		interface="cn.cgnb.api.user.VersionManageFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+	<!-- 扫码支付-->
+	<front:in-reference id="busScanCodeFacade"
+		interface="com.cgnb.mobile.api.qrpay.BusScanCodeFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	
+	<!-- 运营推客-->
+	<front:in-reference id="twitterFacade"
+		interface="com.cgnb.mobile.api.operation.TwitterFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 运营广告位-->
+	<front:in-reference id="mobileAdsenseFacade"
+		interface="com.cgnb.mobile.api.operation.MobileAdsenseFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	
+	
+	
+	<!-- 新注册 -->
+	<front:in-reference id="registerNewFacade"
+		interface="cn.cgnb.api.usernew.RegisterNewFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 丢失手机号 -->
+	<front:in-reference id="updateMobileNewFacade"
+		interface="cn.cgnb.api.usernew.UpdateMobileNewFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 重置密码 -->
+	<front:in-reference id="updatePwdNewFacade"
+		interface="cn.cgnb.api.usernew.UpdatePwdNewFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 重置支付密码 -->
+	<front:in-reference id="updatePayPwdFacade"
+		interface="cn.cgnb.api.usernew.UpdatePayPwdFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 新登录 -->
+	<front:in-reference id="loginNewFacade"
+		interface="cn.cgnb.api.usernew.LoginNewFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 账户体系实名认证 -->
+	<front:in-reference id="certificateFacade"
+		interface="cn.cgnb.api.usernew.CertificateFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	<!-- 中间业务，社保2017 -->
+	<!--零钱包 -->
+	<front:in-reference id="coinpurseFacade"
+		interface="com.cgnb.mobile.api.coinpurse.CoinpurseFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	
+	
+	<front:in-reference id="loanFormProductFacade"
+		interface="com.cgnb.mobile.api.loan.loanForm.LoanFormProductFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+	<!--提示信息 -->
+	<front:in-reference id="noticeFacade"
+		interface="cn.cgnb.api.notice.NoticeFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	
+	<!--获取配置信息 -->
+	<front:in-reference id="configFacade"
+		interface="cn.cgnb.api.config.ConfigFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+	<!-- 结构性存款 -->
+	<front:in-reference id="structuredDepositFacade"
+		interface="com.cgnb.mobile.api.structureddeposit.StructuredDepositFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	
+	<!-- 大额存单 -->
+	<front:in-reference id="certificateDepositsFacade"
+		interface="com.cgnb.mobile.api.certificatedeposits.CertificateDepositsFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	
+	<!-- paysdk -->
+	<front:in-reference id="paysdkFacade"
+		interface="cn.cgnb.api.paysdk.PaysdkFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.paysdk.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	
+	<front:in-reference id="paysdkPaymentFacade"
+		interface="cn.cgnb.api.paysdk.PaysdkPaymentFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.paysdk.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	
+	<front:in-reference id="iValidateFacade"
+		interface="cn.cgnb.api.paysdk.IValidateFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.paysdk.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	
+	<front:in-reference id="paysdkNativeFacade"
+		interface="cn.cgnb.api.paysdk.PaysdkNativeFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.paysdk.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	
+	 <front:in-reference id="paysdkMidBizFacade"
+		interface="cn.cgnb.api.paysdk.PaysdkMidBizFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.paysdk.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	 
+	  <front:in-reference id="paysdkOneKeyPayFacade"
+		interface="cn.cgnb.api.paysdk.PaysdkOneKeyPayFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.paysdk.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	  
+	 
+	 <!-- 加挂他行卡 -->
+	 <front:in-reference id="otherCardFacade"
+		interface="com.cgnb.mobile.api.bankcard.OtherCardFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	 
+	 <!-- 消息免打扰 -->
+	 <front:in-reference id="shutMessageFacade"
+		interface="com.cgnb.mobile.api.message.ShutMessageFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+	 
+	 <!-- 报错统计 -->
+	 <front:in-reference id="saveErrorListFacade"
+		interface="com.cgnb.mobile.api.error.SaveErrorListFacade" registry="${dubbo.cgnb.registry}"
+		version="${dubbo.service.version}" group="${dubbo.mobilebank.group}"
+		timeout="30000" retries="0" check="${dubbo.consumer.check}" />
+
+</beans>
