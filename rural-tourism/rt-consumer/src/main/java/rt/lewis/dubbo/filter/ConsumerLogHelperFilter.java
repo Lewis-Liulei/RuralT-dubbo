@@ -34,7 +34,7 @@ public class ConsumerLogHelperFilter implements Filter {
 
 	@PostConstruct
 	public void init(){
-		logger.info("加载调用方渠道配置信息");
+		logger.info("ConsumerLogHelperFilter的init方法调用");
 	}
 	
 	@Override

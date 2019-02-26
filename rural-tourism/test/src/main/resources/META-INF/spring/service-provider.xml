@@ -15,8 +15,8 @@
 	http://www.springframework.org/schema/context 
 	http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<dubbo:application name="${dubbo.application.name}"
-		owner="${dubbo.application.owner}" organization="dubbo" />
+	<dubbo:application name="rainbow-test"
+		owner="rainbow" organization="dubbo" />
 
 	<dubbo:registry id="rt" address="${dubbo.registry.address}" file="${dubbo.registry.file}" />
 
@@ -32,7 +32,7 @@
 	<!-- 中间业务。房管 本期不上线2016年12月9日18:07:31 -->
 	<dubbo:service version="${dubbo.own.version}" protocol="dubbo"
 		group="${dubbo.rt.group}" registry="${dubbo.rt.registry}"
-		interface="rainbow.api.TestFacade" ref="testFacade"/>
+		interface="rt.lewis.rainbow.api.TestFacade" ref="testFacade"/>
 
 
 </beans>
