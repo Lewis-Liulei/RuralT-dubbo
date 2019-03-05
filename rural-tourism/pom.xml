@@ -7,12 +7,14 @@
   <groupId>rt.lewis</groupId>
   <artifactId>rainbow</artifactId>
   <packaging>pom</packaging>
-  <version>1.0</version>
+  <version>1.0.0</version>
   <modules>
     <module>rt-consumer</module>
     <module>rt-api</module>
     <module>rt-commons</module>
-    <module>test</module>
+    <module>rt-provider-user</module>
+    <module>rt-provider-base</module>
+    <module>rt-provider-dao</module>
   </modules>
 
   <name>rainbow</name>
@@ -21,10 +23,14 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <raibow-commons.version>1.0.0</raibow-commons.version>
+    <raibow-api.version>1.0.0</raibow-api.version>
+    <raibow-base.version>1.0.0</raibow-base.version>
+    <rt-provider-base.version>1.0.0</rt-provider-base.version>
+    <rt-provider-dao.version>1.0.0</rt-provider-dao.version>
   </properties>
 
+  <dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -34,8 +40,48 @@
     </dependency>
     <dependency>
       <groupId>com.alibaba</groupId>
+      <artifactId>druid</artifactId>
+      <version>1.1.10</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis</artifactId>
+      <version>3.4.6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis-spring</artifactId>
+      <version>1.3.2</version>
+    </dependency>
+    <dependency>
+      <groupId>com.alibaba</groupId>
       <artifactId>dubbo</artifactId>
       <version>2.5.10</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.5.5</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpcore</artifactId>
+      <version>4.4.9</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpcore-nio</artifactId>
+      <version>4.4.9</version>
+    </dependency>
+    <dependency>
+      <groupId>com.esotericsoftware</groupId>
+      <artifactId>reflectasm</artifactId>
+      <version>1.11.0</version>
+    </dependency>
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.46</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -107,8 +153,97 @@
       <artifactId>commons-lang3</artifactId>
       <version>3.7</version>
     </dependency>
-  </dependencies>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-tx</artifactId>
+      <version>4.3.10.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>cn.cgnb</groupId>
+      <artifactId>cgnb-cache</artifactId>
+      <version>2.0.2</version>
+      <scope>system</scope>
+      <systemPath>H:/githubWorkSpace/ruralT/dubbo/rural-tourism/lib/cgnb-cache-2.0.2.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>com.wangyin</groupId>
+      <artifactId>wangyin-commons</artifactId>
+      <version>1.0.7</version>
+      <scope>system</scope>
+      <systemPath>H:/githubWorkSpace/ruralT/dubbo/rural-tourism/lib/wangyin-commons-1.0.7.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <version>4.3.10.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-aspects</artifactId>
+      <version>4.3.10.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>6.0.6</version>
+    </dependency>
+    <dependency>
+    <groupId>org.aspectj</groupId>
+    <artifactId>aspectjweaver</artifactId>
+    <version>1.7.4</version>
+  </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.4</version>
+    </dependency>
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>1.1.39</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-validator</artifactId>
+      <version>4.3.2.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.validation</groupId>
+      <artifactId>validation-api</artifactId>
+      <version>1.1.0.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>rt.lewis</groupId>
+      <artifactId>rt-api</artifactId>
+      <version>${raibow-api.version}</version>
+      <!--<scope>compile</scope>-->
+    </dependency>
+    <dependency>
+      <groupId>rt.lewis</groupId>
+      <artifactId>rt-commons</artifactId>
+      <version>${raibow-commons.version}</version>
+      <!--<scope>compile</scope>-->
+    </dependency>
+    <dependency>
+      <groupId>rt.lewis</groupId>
+      <artifactId>rt-provider-dao</artifactId>
+      <version>${rt-provider-dao.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>rt.lewis</groupId>
+      <artifactId>rt-provider-base</artifactId>
+      <version>${rt-provider-base.version}</version>
+      <!--<scope>compile</scope>-->
+    </dependency>
 
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+      <version>1.7.6</version>
+    </dependency>
+
+  </dependencies>
+  </dependencyManagement>
   <build>
     <resources>
       <resource>
@@ -195,14 +330,14 @@
         <rt.message.redis.sentinel.mastername>mymaster</rt.message.redis.sentinel.mastername>
         <rt.message.redis.pwd>cgnb@123</rt.message.redis.pwd>-->
         <!-- 数据库配置 -->
-        <!--<rt.jdbc.url>jdbc:oracle:thin:@172.32.98.18:1521:oracledb</rt.jdbc.url>
-        <rt.jdbc.username>zs_orange_nc</rt.jdbc.username>
-        <rt.jdbc.password>cgnb123</rt.jdbc.password>
+        <rt.jdbc.url>jdbc:mysql://localhost:3306/test_db?useUnicode=true&amp;useSSL=true&amp;characterEncoding=UTF-8&amp;serverTimezone=GMT&amp;rewriteBatchedStatements=true</rt.jdbc.url>
+        <rt.jdbc.username>root</rt.jdbc.username>
+        <rt.jdbc.password>root</rt.jdbc.password>
         <rt.jdbc.initialSize>10</rt.jdbc.initialSize>
         <rt.jdbc.minIdle>1</rt.jdbc.minIdle>
         <rt.jdbc.maxIdle>100</rt.jdbc.maxIdle>
-        <rt.jdbc.maxWait>600000</rt.jdbc.maxWait>
-        <rt.jdbc.maxActive>100</rt.jdbc.maxActive>-->
+        <rt.jdbc.maxWait>60000</rt.jdbc.maxWait>
+        <rt.jdbc.maxActive>50</rt.jdbc.maxActive>
         <!-- panda数据库配置 -->
        <!-- <rt.panda.jdbc.url>jdbc:oracle:thin:@172.32.98.18:1521:oracledb</rt.panda.jdbc.url>
         <rt.panda.jdbc.username>freetrans</rt.panda.jdbc.username>

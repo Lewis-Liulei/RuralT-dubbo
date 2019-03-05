@@ -34,6 +34,7 @@ public class ConsumerLogHelperFilter implements Filter {
 
 	@PostConstruct
 	public void init(){
+
 		logger.info("ConsumerLogHelperFilter的init方法调用");
 	}
 	

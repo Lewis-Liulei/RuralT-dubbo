@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <!-- Activates annotation-based bean configuration -->
+    <context:annotation-config/>
+
+    <!-- Scans for application @Components to deploy -->
+    <context:component-scan base-package="rt.lewis.*">
+    </context:component-scan>
+    <!-- 慢SQL打印 -->
+    <bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
+        <property name="slowSqlMillis" value="1000"/>
+        <property name="logSlowSql" value="true"/>
+    </bean>
+
+    <!--  监控spring bean的执行时间,暂只监控service的事务类方法 -->
+   <bean id="druid-stat-interceptor" class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor" />
+    <aop:config>
+        <aop:pointcut id="druid-stat-pointcut" expression="execution(* rt.lewis.daoservice.*.impl.*.*(..))" />
+        <aop:advisor advice-ref="druid-stat-interceptor" pointcut-ref="druid-stat-pointcut" />
+    </aop:config>
+
+    <!-- 可执行SQL打印 -->
+    <bean id="log4j2-filter" class="rt.lewis.business.RtLog4j2Filter">
+        <property name="connectionLogEnabled" value="true"/>
+        <property name="connectionConnectAfterLogEnabled" value="false"/>
+        <property name="connectionCloseAfterLogEnabled" value="false"/>
+        <property name="resultSetLogEnabled" value="false"/>
+        <property name="statementLogEnabled" value="false"/>
+        <property name="statementExecutableSqlLogEnable" value="true" />
+        <property name="statementExecutableQuerySqlLogEnable" value="false"/> <!-- ${druid.statementExecutableQuerySqlLogEnable} -->
+        <property name="statementSqlFormatOption">
+            <bean class="com.alibaba.druid.sql.SQLUtils.FormatOption">
+                <property name="prettyFormat" value="false"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 扫描dao这个包以及它的子包下的所有映射接口类 -->
+        <property name="basePackage" value="rt.lewis.mapper" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+        <property name="annotationClass" value="org.springframework.stereotype.Repository"/>
+    </bean>
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
+          destroy-method="close">
+        <!--<property name="driverClassName" value="${jdbc.driverClassName}" />-->
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="initialSize" value="${jdbc.initialSize}"/>
+        <property name="minIdle" value="${jdbc.minIdle}"/>
+        <property name="maxActive" value="${jdbc.maxActive}"/>
+        <property name="maxWait" value="${jdbc.maxWait}"/>
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+        <property name="validationQuery" value="SELECT 1 FROM DUAL"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="keepAlive" value="true" />
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="100"/>
+        <property name="filters" value="stat"/>
+        <property name="proxyFilters">
+            <list>
+                <ref bean="stat-filter"/>
+                <ref bean="log4j2-filter"/>
+            </list>
+        </property>
+    </bean>
+<!-- 
+    <bean id="pandaDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="url" value="${panda.jdbc.url}"/>
+        <property name="username" value="${panda.jdbc.username}"/>
+        <property name="password" value="${panda.jdbc.password}"/>
+        <property name="initialSize" value="2"/>
+        <property name="minIdle" value="10"/>
+        <property name="maxActive" value="10"/>
+        <property name="maxWait" value="5000"/>
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+        <property name="validationQuery" value="SELECT 1 FROM DUAL"/>
+        <property name="keepAlive" value="true" />
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20"/>
+        <property name="filters" value="stat"/>
+    </bean>
+ -->
+ <!-- 
+    <bean id="pandaJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="pandaDataSource"/>
+    </bean>
+ -->
+    <!--<bean name="superDAO" class="cn.cgnb.common.dao.SuperDAO">
+        <property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+        <property name="sqlSessionFactory" ref="sampleSqlSessionFactory"/>
+    </bean>-->
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:/mybatis-config.xml"/>
+    </bean>
+
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg ref="sqlSessionFactory"/>
+    </bean>
+
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <tx:advice id="transactionAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="*ByTransaction" propagation="REQUIRED" isolation="READ_COMMITTED"/>
+            <tx:method name="save*" propagation="REQUIRED" isolation="READ_COMMITTED"/>
+            <tx:method name="add*" propagation="REQUIRED" isolation="READ_COMMITTED"/>
+            <tx:method name="insert*" propagation="REQUIRED" isolation="READ_COMMITTED"/>
+            <tx:method name="update*" propagation="REQUIRED" isolation="READ_COMMITTED"/>
+            <tx:method name="delete*" propagation="REQUIRED" isolation="READ_COMMITTED"/>
+            <tx:method name="batch*" propagation="REQUIRED" isolation="READ_COMMITTED"/>
+            <tx:method name="execute*" propagation="REQUIRED" isolation="READ_COMMITTED"/>
+            <tx:method name="invoke*" propagation="REQUIRED" isolation="READ_COMMITTED"/>
+            <tx:method name="process*" propagation="REQUIRED" isolation="READ_COMMITTED"/>
+            <tx:method name="find*" propagation="SUPPORTS" isolation="READ_COMMITTED" read-only="true"/>
+            <!-- 流程事务 -->
+            <tx:method name="startProcess*" propagation="REQUIRED" isolation="READ_COMMITTED"/>
+            <!-- 流水事务 -->
+            <tx:method name="log*" propagation="REQUIRES_NEW" isolation="READ_COMMITTED"/>
+            <tx:method name="*" read-only="true" propagation="SUPPORTS" isolation="READ_COMMITTED"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <aop:pointcut id="transactionPointcut"
+                      expression="execution(* rt.lewis.business.*.impl.*.*(..)) || execution(* rt.lewis.service.*.impl.*.*(..))"/>
+        <aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice"/>
+    </aop:config>
+</beans>

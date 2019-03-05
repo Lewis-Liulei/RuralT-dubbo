@@ -6,9 +6,22 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="rural-tourism" />
+        <module name="rt-api" />
+        <module name="rt-commons" />
+        <module name="rt-consumer" />
+        <module name="rt-provider-base" />
+        <module name="rt-provider-dao" />
+        <module name="rt-provider-user" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="8" />
+    <bytecodeTargetLevel target="8">
+      <module name="rainbow" target="1.8" />
+      <module name="rt-api" target="1.8" />
+      <module name="rt-commons" target="1.8" />
+      <module name="rt-consumer" target="1.8" />
+      <module name="rt-provider-base" target="1.8" />
+      <module name="rt-provider-dao" target="1.8" />
+      <module name="rt-provider-user" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

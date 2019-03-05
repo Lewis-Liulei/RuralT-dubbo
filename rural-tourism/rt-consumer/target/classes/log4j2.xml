@@ -7,7 +7,7 @@
 <Configuration status="WARN" moniterInterval="86400">
     <!-- 定义常量 -->
 	<properties>
-	    <property name="APP_NAME">mobilebank-consumer</property>
+	    <property name="APP_NAME">rt-consumer</property>
 	    <property name="LOG_FILE_PREFIX">consumer</property>
 	    <property name="LOG_HOME">${sys:user.home}/logs/${APP_NAME}</property>
 	</properties>
@@ -86,10 +86,10 @@
 <!-- 			<AppenderRef ref="Console"/> -->
 		</AsyncLogger>
 		<!-- 默认日志设置 -->
-		<AsyncRoot level="${dyn.log.level}" includeLocation="true">
+		<AsyncRoot level="DEBUG" includeLocation="true">
 			<AppenderRef ref="AllRandomAccessFile"/>
 			<AppenderRef ref="ErrorRandomAccessFile"/>
-<!-- 			<AppenderRef ref="Console"/> -->
+ 			<AppenderRef ref="Console"/>
 		</AsyncRoot>
 	</Loggers>
 </Configuration>

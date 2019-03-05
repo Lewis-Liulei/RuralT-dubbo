@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/rainbow.iml" filepath="$PROJECT_DIR$/rainbow.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rt-api/rt-api.iml" filepath="$PROJECT_DIR$/rt-api/rt-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rt-commons/rt-commons.iml" filepath="$PROJECT_DIR$/rt-commons/rt-commons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rt-consumer/rt-consumer.iml" filepath="$PROJECT_DIR$/rt-consumer/rt-consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rt-provider-base/rt-provider-base.iml" filepath="$PROJECT_DIR$/rt-provider-base/rt-provider-base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rt-provider-dao/rt-provider-dao.iml" filepath="$PROJECT_DIR$/rt-provider-dao/rt-provider-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rt-provider-user/rt-provider-user.iml" filepath="$PROJECT_DIR$/rt-provider-user/rt-provider-user.iml" />
+    </modules>
+  </component>
+</project>

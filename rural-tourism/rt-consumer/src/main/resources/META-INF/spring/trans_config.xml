@@ -13,7 +13,7 @@
 	<!-- 开发配置 begin -->
 	<front:out-service id="outService" port="${api.server.port}"
 		protocol="http">
-		<front:in-transform funcodes="${mobilebank.test123.test}"
+		<front:in-transform funcodes="${rainbow.test123.test}"
 			target="testFacade.test01" convertor="baseInputMsgConvertor" />
 	</front:out-service>
 

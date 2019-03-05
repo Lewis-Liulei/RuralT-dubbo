@@ -30,7 +30,7 @@ public abstract class AbstractConvertor {
 	
 	@OuterToInner
 	public Object cvtOuterToInner(MessageSpecInf outer) throws Exception {
-		String methodDesc = "天府手机银行【外部-->内部】,cvtOuterToInner:" + outer.getFuncode();
+		String methodDesc = "乡村旅游【外部-->内部】,cvtOuterToInner:" + outer.getFuncode();
 		logger.debug(LogBuild.getBuilder(methodDesc, "Http外部请求开始").kv("request",  JsonUtil.toJSON(outer)).build());
 		APIHttpMessage req = (APIHttpMessage) outer;
 		
@@ -64,7 +64,7 @@ public abstract class AbstractConvertor {
 			 return resp;
 		}
 		
-		String methodDesc = "天府手机银行【内部-->外部】,cvtInnerToOuter:" + outer.getFuncode();
+		String methodDesc = "乡村旅游【内部-->外部】,cvtInnerToOuter:" + outer.getFuncode();
 		logger.debug(LogBuild.getBuilder(methodDesc, "服务端返回结果").kv("response", mapiResp!=null ? mapiResp.toString() : "null").build());
 		
 		String result=mapiResp!=null?JsonUtil.toJSON(mapiResp):"";

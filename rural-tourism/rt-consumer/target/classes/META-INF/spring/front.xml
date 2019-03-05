@@ -14,7 +14,7 @@
         http://www.springframework.org/schema/util/spring-util-3.1.xsd"
 	default-autowire="no">
 
-	<context:component-scan base-package="com.cgnb,cn.cgnb,*.cgnb.*" />
+	<context:component-scan base-package="rt.lewis,*.front.*" />
 
 	<!-- 加载配置信息 -->
 	<bean id="serviceSourceProperties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -36,7 +36,7 @@
     
 	<!-- 提供方应用信息，用于计算依赖关系 -->
 	<front:application name="${dubbo.application.name}" owner="${dubbo.application.owner}" />
-	<front:registry id="cgnb" address="${dubbo.registry.address}" file="${dubbo.registry.file}"/>
+	<front:registry id="rt" address="${dubbo.registry.address}" file="${dubbo.registry.file}"/>
 	<front:protocols name="dubbo" port="${dubbo.protocol.port}" threads="${dubbo.protocol.threads}"/>
 	<front:protocol name="http" codec="httpCodec" />
 	
@@ -44,7 +44,7 @@
 	<!-- URL请求与内部交易码适配 -->
 <!-- 	<bean id="httpCodec" class="com.cgnb.mobile.api.codec.HttpCodecEx"> -->
 	<bean id="httpCodec" class="com.wangyin.front.codec.HttpCodec">	    
-		<property name="adaptationHttpMessageClazzName" value="com.cgnb.mobile.api.message.APIHttpMessage" />
+		<property name="adaptationHttpMessageClazzName" value="rt.lewis.api.message.APIHttpMessage" />
 	</bean>
 
 </beans>

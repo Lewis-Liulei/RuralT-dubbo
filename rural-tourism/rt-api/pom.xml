@@ -5,7 +5,7 @@
     <parent>
         <artifactId>rainbow</artifactId>
         <groupId>rt.lewis</groupId>
-        <version>1.0</version>
+        <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -17,8 +17,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -31,7 +29,6 @@
         <dependency>
             <groupId>rt.lewis</groupId>
             <artifactId>rt-commons</artifactId>
-            <version>1.0</version>
         </dependency>
     </dependencies>
 

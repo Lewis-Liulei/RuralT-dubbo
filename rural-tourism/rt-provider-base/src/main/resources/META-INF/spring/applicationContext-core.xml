@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xsi:schemaLocation="
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util-3.1.xsd">
+
+
+	<!-- Activates annotation-based bean configuration -->
+	<context:annotation-config />
+
+	<!-- Scans for application @Components to deploy ,cn.cgnb,*.cgnb.*-->
+	<context:component-scan base-package="rt.lewis.*">
+	</context:component-scan>
+  
+	<!-- 数据库配置文件位置 -->
+	<context:property-placeholder location="classpath:/*.properties" />
+	
+	<!--<util:properties id="servicecodeMapping" location="classpath:/servicecodeMapping.properties" />
+	<util:properties id="appInvokeMapping" location="classpath:/appInvokeMapping.properties" />
+	<util:properties id="invokerconfig" location="classpath:/invokerconfig.properties" />-->
+<!--
+    <bean id="filterUtil" class="com.cgnb.business.CommonFilter" init-method="init">
+         <property name="jedisTemplate" ref="jedisTemplate"/>
+         <property name="mobileSystemLoginService" ref="mobileSystemLoginService"/>
+         <property name="sysDeviceInfoService" ref="sysDeviceInfoService"/>
+         <property name="sysUserService" ref="sysUserService"/>
+         <property name="transCommonContextService" ref="transCommonContextService"/>
+         <property name="transConfigService" ref="transConfigService"/>
+         <property name="startRequestService" ref="startRequestService"/>
+         <property name="startBiz" ref="startBiz"/>
+         <property name="loginProducer" ref="loginProducer"/>
+         <property name="topicName" value="${dyn.rocketMQ.login.topicName}"/>
+         <property name="exceptUrlList">
+             <list>
+				<value>/ws/sysApkinfoInfo/checkUpdate</value>
+				<value>/ws/checkInnerUser</value>
+				<value>/ws/verificationCode</value>
+				<value>/ws/register</value>
+				<value>/ws/updatePwd/resetPassword</value>
+				<value>/ws/updatePwd/checkInfo</value>
+				<value>/ws/outLogin</value>
+				<value>/ws/getCifSeq</value>
+				<value>/ws/checkAcNo</value>
+				<value>/ws/getEBankUserInfo</value>
+				<value>/ws/checkUserPwd</value>
+				<value>/ws/sysApkinfoInfo/checkout</value>
+				<value>/ws/pay/pc</value>
+				<value>/ws/wallet/refundToMore</value>
+				<value>/ws/records</value>
+				<value>/ws/spread/downAppUrl</value>
+				<value>/ws/spread/inviteConfig</value>
+				<value>/ws/spread/validate</value>
+				<value>/ws/wallet/friend/queryPhoneNumbers</value>
+				<value>/ws/msgLogin</value>
+				<value>/ws/personal/userDevice/saveDevice</value>
+				<value>/ws/passwordBord/getOtherPasswordImg</value>
+				<value>/ws/passwordBord/decodePassword</value>
+				<value>/ws/checkLoginAcNo</value>
+				<value>/ws/errorCodeMessage</value>
+				<value>/ws/getSysMessage</value>
+				<value>/ws/login</value>
+				<value>/ws/startRequest</value>
+				<value>/ws/register</value>
+				<value>/ws/getAcNoType</value>
+				<value>/ws/checkAcNoPwd</value>
+				<value>/ws/checkBankPhone</value>
+				<value>/ws/setPayPwd</value>
+		    </list>
+         </property>
+         <property name="notUpdateList">
+             <list>
+				<value>/ws/outLogin</value>
+				<value>/ws/sysApkinfoInfo/checkout</value>
+				<value>/ws/wsapkinfomanager/checkUpdate</value>
+				<value>/ws/logout</value>
+				<value>/ws/sysApkinfoInfo/checkUpdate</value>
+		    </list>
+         </property>
+         <property name="checkToken" value="${provider.isCheckToken}"/>
+    </bean>-->
+</beans>
